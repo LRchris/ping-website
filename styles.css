@@ -1,69 +1,123 @@
+:root {
+  --teal: #4FB1AA;
+  --navy: #132C45;
+  --yellow: #FFD166;
+  --white: #ffffff;
+  --gray: #f4f4f4;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #4FB1AA; /* teal */
-  color: #132C45; /* dark blue */
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-  width: 200px;
-}
-
-h1 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-p {
-  font-size: 1.2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--teal);
+  color: var(--navy);
   line-height: 1.6;
 }
 
-.section {
-  margin: 3rem 0;
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
-.download-button {
-  display: block;
-  width: max-content;
-  margin: 2rem auto;
-  padding: 1rem 2rem;
-  background-color: #132C45; /* dark blue */
-  color: #FFD166; /* yellow */
-  border: 2px solid #FFD166;
-  border-radius: 6px;
-  font-size: 1.2rem;
+header {
   text-align: center;
+  padding: 2rem 1rem;
+}
+
+.logo {
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  border-left: 6px solid var(--yellow);
+  padding-left: 0.6rem;
+}
+
+p {
+  font-size: 1.125rem;
+  margin-top: 1rem;
+}
+
+.section {
+  background-color: var(--gray);
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+ul {
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 1rem;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--navy);
+  color: var(--yellow);
+  padding: 0.9rem 1.6rem;
+  border-radius: 6px;
   text-decoration: none;
+  font-size: 1.1rem;
+  border: 2px solid var(--yellow);
+  transition: background-color 0.3s;
 }
 
-.download-button:hover {
+.button:hover {
   background-color: #0f243b;
-}
-
-.step-list {
-  list-style: none;
-  padding: 0;
-}
-
-.step-list li {
-  margin: 1rem 0;
-  padding-left: 1rem;
-  border-left: 4px solid #FFD166;
 }
 
 footer {
   text-align: center;
   font-size: 0.9rem;
-  margin-top: 4rem;
-  color: #f0f0f0;
+  padding: 2rem 1rem;
+  color: var(--white);
+}
+
+a {
+  color: var(--yellow);
+}
+
+.pricing-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pricing-box {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-left: 6px solid var(--yellow);
+  border-radius: 6px;
+}
+
+.pricing-box h3 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.pricing-box p {
+  margin: 0.5rem 0 0 0;
+}
+
+@media (min-width: 768px) {
+  .pricing-table {
+    flex-direction: row;
+    gap: 2rem;
+  }
+  .pricing-box {
+    flex: 1;
+  }
 } 
