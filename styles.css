@@ -38,8 +38,8 @@ h1 {
 h2 {
   font-size: 1.75rem;
   margin-top: 2rem;
-  border-left: 6px solid var(--yellow);
-  padding-left: 0.6rem;
+  border-left: none;
+  padding-left: 0;
 }
 
 p {
@@ -48,10 +48,10 @@ p {
 }
 
 .section {
-  background-color: var(--teal);
+  background-color: transparent;
   padding: 2rem;
-  border-radius: 8px;
   margin: 2rem 0;
+  border-radius: 0;
 }
 
 ul {
@@ -97,10 +97,10 @@ a {
 }
 
 .pricing-box {
-  background-color: var(--teal);
+  background-color: transparent;
   padding: 1.5rem;
-  border-left: 6px solid var(--yellow);
-  border-radius: 6px;
+  border-left: none;
+  border-radius: 0;
 }
 
 .pricing-box h3 {
