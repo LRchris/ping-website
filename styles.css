@@ -48,7 +48,7 @@ p {
 }
 
 .section {
-  background-color: var(--gray);
+  background-color: var(--teal);
   padding: 2rem;
   border-radius: 8px;
   margin: 2rem 0;
@@ -97,7 +97,7 @@ a {
 }
 
 .pricing-box {
-  background-color: var(--white);
+  background-color: var(--teal);
   padding: 1.5rem;
   border-left: 6px solid var(--yellow);
   border-radius: 6px;
