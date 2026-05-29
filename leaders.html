@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ping for Leaders</title>
+  <style>
+    :root {
+      --navy: #0f2a44;
+      --purple: #5a6fd8;
+      --teal: #2fb7a3;
+      --orange: #f6a623;
+      --teal-dark: #147c7c;
+      --yellow: #f2c94c;
+      --red: #e85d63;
+      --cream: #fffaf3;
+      --soft-purple: #f4f1ff;
+      --soft-teal: #effcfb;
+      --soft-orange: #fff6e8;
+      --border: #e8e3f4;
+      --text: #18213f;
+      --muted: #667085;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fffdf8 0%, #faf8ff 100%);
+    }
+    a { text-decoration: none; color: inherit; }
+    header {
+      height: 76px;
+      padding: 0 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,.9);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      gap: 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+    .logo-image {
+      height: 56px;
+      width: auto;
+      display: block;
+    }
+    .script {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--navy);
+      opacity: .8;
+      white-space: nowrap;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-weight: 800;
+      font-size: 14px;
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+    .site-nav a { opacity: .82; }
+    .site-nav a.active { opacity: 1; color: var(--teal-dark); }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: white;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(47,183,163,.24);
+      white-space: nowrap;
+    }
+    .button.secondary {
+      background: white;
+      color: var(--teal-dark);
+      border: 1px solid var(--purple);
+      box-shadow: none;
+    }
+    section { padding: 54px 5vw; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 54px;
+      align-items: center;
+    }
+    .eyebrow {
+      color: var(--teal-dark);
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: .08em;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    h1, h2, h3 { color: var(--navy); }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(42px, 5vw, 68px);
+      line-height: 1.02;
+      letter-spacing: -2px;
+      margin: 0 0 26px;
+    }
+    h1 em { color: var(--teal); font-style: italic; }
+    .lead {
+      font-size: 20px;
+      line-height: 1.6;
+      max-width: 620px;
+      margin-bottom: 36px;
+    }
+    .hero-features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+    .hero-feature { font-size: 13px; line-height: 1.45; }
+    .circle-icon {
+      width: 54px;
+      height: 54px;
+      border: 2px solid var(--purple);
+      color: var(--purple);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+    .visual-card {
+      border-radius: 28px;
+      min-height: 520px;
+      padding: 44px;
+      color: var(--navy);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.25), rgba(16,29,70,.65)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(16,29,70,.16);
+    }
+    .visual-card h2 { font-family: Georgia, serif; font-size: 30px; line-height: 1.15; margin: 0 0 14px; }
+    .visual-card p { max-width: 430px; font-size: 17px; line-height: 1.5; }
+    .visual-card strong { color: var(--purple); font-size: 20px; }
+    .vs-card {
+      background: rgba(255,255,255,.92);
+      border-radius: 22px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      overflow: hidden;
+      box-shadow: 0 20px 44px rgba(16,29,70,.18);
+    }
+    .vs-column { padding: 28px; }
+    .vs-column h4 { margin: 0 0 18px; color: var(--navy); font-size: 16px; }
+    .vs-column p { margin: 12px 0; font-size: 14px; }
+    .vs-bubble {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: 0 8px 20px rgba(16,29,70,.16);
+      z-index: 2;
+    }
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: 0 16px 40px rgba(16,29,70,.06);
+      overflow: hidden;
+    }
+    .section-title {
+      font-family: Georgia, serif;
+      font-size: 36px;
+      text-align: center;
+      margin: 0 0 34px;
+      letter-spacing: -.5px;
+    }
+    .value-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .value-item {
+      padding: 36px 28px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .value-item:last-child { border-right: 0; }
+    .value-item .big-icon { font-size: 46px; margin-bottom: 16px; }
+    .value-item p { line-height: 1.5; margin-bottom: 0; }
+    .fit-section {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 34px;
+      align-items: center;
+      padding: 46px;
+      border-top: 1px solid var(--border);
+    }
+    .fit-section h2,
+    .different-section h2 {
+      font-family: Georgia, serif;
+      font-size: 34px;
+      line-height: 1.1;
+      margin: 0 0 18px;
+    }
+    .comparison-table {
+      display: grid;
+      grid-template-columns: .55fr repeat(4, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      font-size: 13px;
+      background: white;
+    }
+    .comparison-table div {
+      padding: 16px 12px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .comparison-table div:nth-child(5n) { border-right: 0; }
+    .comparison-table .head { font-weight: 900; background: #f7f5ff; color: var(--navy); }
+    .comparison-table .rowhead { font-weight: 900; background: #fbfaff; }
+    .comparison-table .ping-col { background: rgba(90,111,216,.16); color: #4056b5; font-weight: 800; }
+    .different-section {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 36px;
+      padding: 46px;
+      border-top: 1px solid var(--border);
+    }
+    .bullet { display: flex; gap: 12px; margin: 18px 0; line-height: 1.45; }
+    .check {
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--teal-dark);
+      color: white;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .ask-compare {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 0;
+    }
+    .ask-card {
+      min-height: 270px;
+      padding: 30px;
+      border: 1px solid var(--border);
+    }
+    .ask-card.left { border-radius: 22px 0 0 22px; background: var(--soft-orange); }
+    .ask-card.right { border-radius: 0 22px 22px 0; background: var(--soft-teal); }
+    .ask-card h3 { margin-top: 0; }
+    .ask-card p { line-height: 1.5; }
+    .metric-row {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .quote,
+    .metric {
+      padding: 34px;
+      border-right: 1px solid var(--border);
+    }
+    .metric:last-child { border-right: 0; }
+    .quote { font-size: 16px; line-height: 1.55; }
+    .metric { text-align: center; }
+    .metric strong {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 44px;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .metric .icon { font-size: 38px; color: var(--purple); }
+    .how-section {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 40px;
+      padding: 46px;
+      border-top: 1px solid var(--border);
+    }
+    .step { display: grid; grid-template-columns: 42px 1fr; gap: 16px; margin: 24px 0; }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--teal-dark);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+    .insight-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 15px 35px rgba(16,29,70,.08);
+    }
+    .recharge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 22px 0;
+    }
+    .recharge {
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      background: var(--soft-purple);
+    }
+    .recommendations { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+    .pill {
+      background: #f5f5fb;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .cta {
+      margin: 42px 5vw 64px;
+      border-radius: 28px;
+      padding: 42px;
+      background: linear-gradient(135deg, #f1edff, #fff8ed);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+      border: 1px solid var(--border);
+    }
+    .cta h2 { font-family: Georgia, serif; font-size: 34px; margin: 0 0 12px; }
+    .cta-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    @media (max-width: 1100px) { .script { display: none; } }
+    @media (max-width: 1000px) {
+      header { height: auto; padding: 18px 5vw; flex-wrap: wrap; }
+      .site-nav { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
+      .hero, .fit-section, .different-section, .how-section, .ask-compare, .cta { grid-template-columns: 1fr; }
+      .hero-features, .value-row, .metric-row, .recharge-grid { grid-template-columns: 1fr; }
+      .comparison-table { grid-template-columns: 1fr; }
+      .comparison-table div { border-right: 0; }
+      .vs-card { grid-template-columns: 1fr; }
+      .vs-bubble { margin: -12px auto; }
+      .ask-card.left, .ask-card.right { border-radius: 22px; }
+      .metric-row { display: block; }
+      .value-item, .quote, .metric { border-right: 0; border-bottom: 1px solid var(--border); }
+      .cta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">
+      <img src="assets/primary-logo.svg" alt="Ping" class="logo-image" />
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="leaders.html" class="active">For Leaders</a>
+      <a href="team-members.html">For Team Members</a>
+    </nav>
+    <span class="script">Questions. People. Connection.</span>
+    <a class="button" href="#">Request a Demo</a>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">For leaders</div>
+      <h1>Leadership starts with paying attention.</h1>
+      <p class="lead">
+        Leading isn't that hard. 90% is just treating people with humanity. Ping is the only tool that is designed to help you learn about your team instead of using them to make a corporate report card.
+      </p>
+      <div class="hero-features">
+        <div class="hero-feature">
+          <div class="circle-icon">♡</div>
+          <strong>Amplify your best motivations</strong>
+          <p>Ping makes it easier to be the kind of leader you want to be.</p>
+        </div>
+        <div class="hero-feature">
+          <div class="circle-icon">👂</div>
+          <strong>Listen first, always</strong>
+          <p>Give every voice a seat at the table — every day.</p>
+        </div>
+        <div class="hero-feature">
+          <div class="circle-icon">👥</div>
+          <strong>See the whole human</strong>
+          <p>Discover what brings your team together and what they need to thrive.</p>
+        </div>
+        <div class="hero-feature">
+          <div class="circle-icon">↗</div>
+          <strong>Act with clarity and care</strong>
+          <p>Get AI-powered insights that inspire positive, human-centered action.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="visual-card">
+      <div>
+        <h2>The workplace is changing.<br />Your choice matters.</h2>
+        <p>
+          As AI transforms work, people are craving more human connection,
+          purpose, and belonging.
+        </p>
+        <strong>Ping helps you lead the way.</strong>
+      </div>
+
+      <div class="vs-card">
+        <div class="vs-column">
+          <h4>Without Ping</h4>
+          <p>× Disconnected teams</p>
+          <p>× Assumptions over truth</p>
+          <p>× Problem-focused culture</p>
+          <p>× Data locked in silos</p>
+          <p>× Reactive leadership</p>
+        </div>
+        <div class="vs-bubble">vs.</div>
+        <div class="vs-column">
+          <h4>With Ping</h4>
+          <p>✓ Connected, trusting teams</p>
+          <p>✓ Shared understanding</p>
+          <p>✓ Positive, proactive culture</p>
+          <p>✓ Transparency and respect</p>
+          <p>✓ Confident, human leadership</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="panel">
+      <div style="padding: 34px 34px 0;">
+        <h2 class="section-title">Real value for leaders. Real impact for teams.</h2>
+      </div>
+
+      <div class="value-row">
+        <div class="value-item"><div class="big-icon">💞</div><h3>Stronger culture</h3><p>Build trust, belonging, and psychological safety through everyday connection.</p></div>
+        <div class="value-item"><div class="big-icon">💬</div><h3>Better decisions</h3><p>Make choices with more context and empathy — not just metrics.</p></div>
+        <div class="value-item"><div class="big-icon">🌱</div><h3>Higher engagement</h3><p>People feel valued, heard, and more invested in the team and mission.</p></div>
+        <div class="value-item"><div class="big-icon">🛡️</div><h3>Retain your people</h3><p>When people feel seen and supported, they’re more likely to stay.</p></div>
+        <div class="value-item"><div class="big-icon">☀️</div><h3>More humanity at work</h3><p>Create a workplace people are proud to be part of — especially in the age of AI.</p></div>
+      </div>
+
+      <div class="fit-section">
+        <div>
+          <div class="eyebrow">Where Ping fits</div>
+          <h2>Ping works with — and improves — the tools you already use.</h2>
+          <p>
+            Most organizations invest heavily in listening, engagement, and people insights.
+            But those tools are often expensive, infrequent, and incomplete. Ping brings them
+            together in a daily, people-first experience.
+          </p>
+        </div>
+
+        <div class="comparison-table">
+          <div></div><div class="head">Employee Listening Surveys</div><div class="head">Employee Engagement Surveys</div><div class="head">DISC / Personality Profiles</div><div class="head ping-col">Ping</div>
+          <div class="rowhead">Focus</div><div>Workplace experience and problems</div><div>Engagement and satisfaction</div><div>Individual personality and behavior</div><div class="ping-col">People, connection, and what drives us</div>
+          <div class="rowhead">Frequency</div><div>Quarterly / annual</div><div>Quarterly / annual</div><div>Once every few years</div><div class="ping-col">Daily</div>
+          <div class="rowhead">Cost</div><div>$$$</div><div>$$$</div><div>$$$ per person</div><div class="ping-col">$ — affordable for everyone</div>
+          <div class="rowhead">Who Benefits</div><div>Leadership / HR</div><div>Leadership / HR</div><div>Individuals, usually limited to some employees</div><div class="ping-col">Everyone, together</div>
+          <div class="rowhead">What You Get</div><div>Snapshots of issues and risks</div><div>Benchmarks and trend data</div><div>Static profile for coaching</div><div class="ping-col">Living, evolving insights that build connection and action</div>
+        </div>
+      </div>
+
+      <div class="different-section">
+        <div>
+          <div class="eyebrow">Why Ping is different</div>
+          <h2>A different kind of listening. A deeper kind of impact.</h2>
+          <div class="bullet"><div class="check">✓</div><div><strong>Focuses on people, not policies.</strong><br />We ask questions about life, perspectives, values, and what makes us human.</div></div>
+          <div class="bullet"><div class="check">✓</div><div><strong>Builds understanding, not just awareness.</strong><br />AI highlights patterns that help teammates appreciate each other and work better together.</div></div>
+          <div class="bullet"><div class="check">✓</div><div><strong>Ongoing and inclusive.</strong><br />Everyone participates, every day — so everyone benefits.</div></div>
+        </div>
+
+        <div class="ask-compare">
+          <div class="ask-card left">
+            <h3>Traditional Listening Asks:</h3>
+            <p><strong>“How do you feel about the workplace?”</strong></p>
+            <p>× Focus on problems</p>
+            <p>× Private and infrequent</p>
+            <p>× Managed by HR</p>
+            <p>× Action is slow and reactive</p>
+          </div>
+          <div class="vs-bubble">vs.</div>
+          <div class="ask-card right">
+            <h3>Ping Asks:</h3>
+            <p><strong>“What inspires, challenges, and helps you grow?”</strong></p>
+            <p>✓ Focus on people and connection</p>
+            <p>✓ Shared daily with everyone</p>
+            <p>✓ Owned by the team</p>
+            <p>✓ Action is fast and human</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="how-section">
+        <div>
+          <div class="eyebrow">How Ping works</div>
+          <h2 class="section-title" style="text-align:left;">Simple for leaders. Powerful for everyone.</h2>
+          <div class="step"><div class="step-number">1</div><div><strong>A daily question</strong><br />Everyone gets the same thought-provoking question.</div></div>
+          <div class="step"><div class="step-number">2</div><div><strong>Everyone answers</strong><br />Answers are shared company-wide — transparently.</div></div>
+          <div class="step"><div class="step-number">3</div><div><strong>AI finds the good</strong><br />Ping highlights uplifting patterns and opportunities.</div></div>
+          <div class="step"><div class="step-number">4</div><div><strong>Teams take action</strong><br />Small, human-centered actions create big impact.</div></div>
+        </div>
+
+        <div class="insight-card">
+          <small>☼ Today’s insight</small>
+          <h3>Your team recharges in different ways.</h3>
+          <p>Celebrating these differences can help everyone thrive.</p>
+          <div class="recharge-grid">
+            <div class="recharge"><strong>Social Connection</strong><p>Enjoys time with others and group activities.</p><strong>42%</strong></div>
+            <div class="recharge"><strong>Solo Recharge</strong><p>Values quiet time and personal space.</p><strong>35%</strong></div>
+            <div class="recharge"><strong>Active Renewal</strong><p>Recharges through movement and activity.</p><strong>23%</strong></div>
+          </div>
+          <h4>AI recommendation</h4>
+          <p>Consider a Recharge Day with options for everyone:</p>
+          <div class="recommendations">
+            <span class="pill">🍽 Team lunch</span>
+            <span class="pill">🌿 Quiet time</span>
+            <span class="pill">🏁 Early finish</span>
+            <span class="pill">🚶 Movement break</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="quote">
+          <div class="eyebrow">Leaders love Ping</div>
+          <p>“Ping has completely changed how we connect. It’s not another survey — it’s our daily reminder that we’re humans first.”</p>
+          <strong>— Sarah J.</strong><br />
+          <small>CEO, People-First Tech Company</small>
+        </div>
+        <div class="metric"><div class="icon">👥</div><strong>92%</strong><p>of leaders say Ping helps them understand their teams more deeply</p></div>
+        <div class="metric"><div class="icon">🙂</div><strong>89%</strong><p>of teams feel more connected and appreciated since using Ping</p></div>
+        <div class="metric"><div class="icon">📈</div><strong>86%</strong><p>of leaders say Ping helps them make better, more human decisions</p></div>
+        <div class="metric"><div class="icon">💰</div><strong>50%+</strong><p>lower cost compared to traditional listening and personality assessments</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div>
+      <h2>Lead the future of work — together.</h2>
+      <p>
+        Ping is more than a tool. It’s a daily practice that helps you lead with empathy,
+        clarity, and courage in a world that needs more humanity.
+      </p>
+    </div>
+    <div class="cta-actions">
+      <a href="#" class="button secondary">See How It Works</a>
+      <a href="#" class="button">Request a Demo</a>
+    </div>
+  </div>
+  <script src="assets/header-phrases.js"></script>
+</body>
+</html>

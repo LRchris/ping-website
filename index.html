@@ -3,202 +3,509 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ping Beta — One question. Every day.</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="assets/favicon.ico" />
+  <title>Ping | Daily connection for teams</title>
+  <style>
+    :root {
+      --navy: #0f2a44;
+      --purple: #5a6fd8;
+      --teal: #2fb7a3;
+      --orange: #f5a623;
+      --teal-dark: #147c7c;
+      --yellow: #f2c94c;
+      --red: #f45b69;
+      --cream: #fffaf0;
+      --soft: #f7f5ff;
+      --border: #e7e2f3;
+      --text: #17203c;
+      --muted: #667085;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fffdf8, #f9f7ff);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6vw;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+
+    .logo-image {
+      height: 56px;
+      width: auto;
+      display: block;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy);
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+
+    .site-nav a { opacity: .8; }
+    .site-nav a.active { opacity: 1; color: var(--teal-dark); }
+
+    .tagline {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: var(--navy);
+      opacity: .85;
+      white-space: nowrap;
+    }
+
+    .button {
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: white;
+      padding: 13px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 10px 22px rgba(47,183,163,.24);
+      white-space: nowrap;
+    }
+
+    section { padding: 56px 6vw; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: .96;
+      margin: 0 0 28px;
+      color: var(--navy);
+      letter-spacing: -2px;
+    }
+
+    h1 span { color: var(--teal); }
+
+    .lead {
+      font-size: 21px;
+      line-height: 1.55;
+      max-width: 620px;
+      margin-bottom: 36px;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .mini-feature { font-size: 14px; }
+    .mini-feature .icon { font-size: 30px; margin-bottom: 8px; }
+
+    .mock-card {
+      min-height: 520px;
+      border-radius: 32px;
+      padding: 40px;
+      background:
+        linear-gradient(135deg, rgba(115,87,232,.35), rgba(255,197,125,.35)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .question-card {
+      width: 340px;
+      background: rgba(255,255,255,.92);
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 24px 60px rgba(16,29,70,.22);
+    }
+
+    .question-card h2 {
+      font-size: 32px;
+      line-height: 1.1;
+      margin: 16px 0 20px;
+      color: var(--navy);
+    }
+
+    .answer-list {
+      display: grid;
+      gap: 10px;
+      margin: 0 0 20px;
+    }
+
+    .answer-option {
+      border-radius: 16px;
+      border: 1px solid rgba(15, 42, 68, 0.12);
+      background: rgba(47, 183, 163, 0.08);
+      color: var(--navy);
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .answer-option.selected {
+      background: rgba(47, 183, 163, 0.16);
+      border-color: rgba(47, 183, 163, 0.45);
+      box-shadow: 0 8px 18px rgba(47, 183, 163, 0.14);
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ddd;
+      border: 2px solid white;
+      margin-left: -8px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+    }
+
+    .avatar:first-child { margin-left: 0; }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 34px;
+      box-shadow: 0 12px 35px rgba(16,29,70,.06);
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 38px;
+      color: var(--navy);
+      margin: 0 0 28px;
+    }
+
+    .does-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+    }
+
+    .does, .not { padding: 32px; }
+    .does { background: linear-gradient(135deg, #effdfb, #ffffff); }
+    .not { background: linear-gradient(135deg, #fff2f2, #ffffff); }
+    .does h3 { color: var(--teal); }
+    .not h3 { color: var(--red); }
+
+    li { margin: 16px 0; line-height: 1.45; }
+
+    .examples {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 28px;
+    }
+
+    .example-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 10px 28px rgba(16,29,70,.05);
+    }
+
+    .label {
+      display: inline-block;
+      background: rgba(47, 183, 163, 0.12);
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 7px 11px;
+      border-radius: 999px;
+      letter-spacing: .04em;
+      margin-bottom: 16px;
+    }
+
+    .example-card h3 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      color: var(--navy);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .recharge-path {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .path-item {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .values {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .value { padding: 20px; }
+    .value .icon { font-size: 34px; }
+
+    .closing {
+      margin: 0 6vw 60px;
+      background: linear-gradient(135deg, #f0ecff, #fffaf0);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 42px;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .closing h2 {
+      font-family: Georgia, serif;
+      font-size: 34px;
+      color: var(--navy);
+      margin: 0 0 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .site-nav { gap: 16px; font-size: 13px; }
+      .tagline { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      header { gap: 16px; height: auto; padding: 18px 6vw; flex-wrap: wrap; }
+      .site-nav { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
+      .hero,
+      .does-grid,
+      .examples,
+      .values,
+      .feature-row { grid-template-columns: 1fr; }
+      .closing { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="site-header">
-      <img src="assets/primary-logo.svg" alt="Ping" class="brand-logo" />
-      <p class="header-tagline">asked and answered</p>
-    </header>
+  <header>
+    <a class="logo" href="index.html">
+      <img src="assets/primary-logo.svg" alt="Ping" class="logo-image" />
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="leaders.html">For Leaders</a>
+      <a href="team-members.html">For Team Members</a>
+    </nav>
+    <div class="tagline">Questions. People. Connection.</div>
+    <a class="button" href="#">Request Early Access</a>
+  </header>
 
-    <main class="content-shell">
-      <section class="hero card">
-        <div class="eyebrow">Ping</div>
-        <h1>One question. Every day.</h1>
-        <p class="hero-copy">
-          Ping is a tiny daily question that helps teams feel a little more connected, without
-          turning work into another survey, dashboard, or corporate homework assignment.
-        </p>
-        <p class="hero-copy">
-          Every day, you answer one quick question. Then you see how your team answered, who is
-          on the same wavelength, and what small patterns are starting to emerge.
-        </p>
-        <p class="hero-highlight">Not another survey. Just one question people actually want to answer.</p>
-        <div class="hero-actions">
-          <a class="button-primary" href="https://drive.google.com/file/d/1QKrHTmKNB8JbvT1mA8kPzAw9qd_RCdLH/view?usp=share_link">Download Ping for Beta Testing</a>
+  <section class="hero">
+    <div>
+      <h1>Not another survey.</h1>
+      <p class="lead">
+        One question. Every day. That's it.
+      </p>
+
+      <div class="feature-row">
+        <div class="mini-feature">
+          <div class="icon">👥</div>
+          <strong>Everyone participates</strong>
+          <p>Answers belong to the people, not management.</p>
         </div>
-      </section>
-
-      <section class="section-grid">
-        <article class="card section-card">
-          <h2>What Ping Does</h2>
-          <p>
-            Ping asks one simple question each day.
-          </p>
-          <p>
-            Sometimes it is fun. Sometimes it is reflective. Sometimes it is surprisingly useful.
-            The point is not to measure people to death. The point is to create a small daily
-            habit that helps people know and be known.
-          </p>
-          <div class="callout-block">
-            <p>After answering, you can see:</p>
-            <ul>
-              <li>how the group answered today</li>
-              <li>who matched your answer</li>
-              <li>how your own responses are trending over time</li>
-              <li>what Ping’s AI notices about the team as a whole</li>
-            </ul>
-          </div>
-          <p>
-            No long surveys. No giant engagement platform. No waiting six months for a report
-            nobody reads.
-          </p>
-          <p class="section-close">Just one question, asked and answered.</p>
-        </article>
-
-        <article class="card section-card">
-          <h2>Why It Exists</h2>
-          <p>
-            Most employee surveys feel like they belong to leadership.
-          </p>
-          <p>
-            Ping is different. Ping is built to feel like it belongs to the team.
-          </p>
-          <p>
-            The questions are lightweight enough to answer every day, but meaningful enough to
-            start real conversations. Over time, those small answers become a clearer picture of
-            how the team is doing, what people value, and where the workplace might need
-            attention.
-          </p>
-          <div class="callout-block">
-            <p>Ping is serious insight wrapped in a much more human experience.</p>
-          </div>
-        </article>
-      </section>
-
-      <section class="card section-card">
-        <h2>How It Works</h2>
-        <div class="steps-grid">
-          <div class="step-card">
-            <div class="step-number">1</div>
-            <h3>Answer the daily Ping</h3>
-            <p>Open the app, answer one question, and move on with your day.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-number">2</div>
-            <h3>See the results instantly</h3>
-            <p>After you answer, you can see how others responded. It is quick, social, and sometimes unexpectedly funny.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-number">3</div>
-            <h3>Notice your matches</h3>
-            <p>Ping can show when you and someone else have answered the same way over a streak of days. It is a small way to find common ground with people you may not know well yet.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-number">4</div>
-            <h3>Learn from the patterns</h3>
-            <p>Ping uses AI to summarize broad team-level themes and trends without calling out individuals. The goal is to help the team understand itself better, not put anyone on trial.</p>
-          </div>
+        <div class="mini-feature">
+          <div class="icon">🤝</div>
+          <strong>Shared with all</strong>
+          <p>Transparency builds trust and stronger human connections.</p>
         </div>
-      </section>
+        <div class="mini-feature">
+          <div class="icon">☀️</div>
+          <strong>AI that uplifts</strong>
+          <p>Helpful, actionable insights — never shaming.</p>
+        </div>
+        <div class="mini-feature">
+          <div class="icon">♡</div>
+          <strong>Stronger together</strong>
+          <p>Understanding each other leads to compassion and better decisions.</p>
+        </div>
+      </div>
+    </div>
 
-      <section class="section-grid">
-        <article class="card section-card">
-          <h2>Built for Teams That Don’t Need Another Survey</h2>
-          <p>
-            Ping is for teams that want more connection, more conversation, and more honest
-            signals about how people are doing.
-          </p>
-          <div class="callout-block">
-            <p>It is especially useful for:</p>
-            <ul>
-              <li>small and mid-sized companies</li>
-              <li>distributed or hybrid teams</li>
-              <li>leaders who want better insight without survey fatigue</li>
-              <li>teams that want culture-building to feel less forced</li>
-            </ul>
-          </div>
-          <p>
-            Ping is not trying to replace every HR tool. It is trying to become the question
-            people actually talk about.
-          </p>
-        </article>
+    <div class="mock-card">
+      <div class="question-card">
+        <small>☼ Today’s Question</small>
+        <h2>What is the best coworker prank?</h2>
+        <div class="answer-list">
+          <div class="answer-option">Stapler in jello</div>
+          <div class="answer-option selected">Everyone pretends like they don't know them for a while</div>
+          <div class="answer-option">Meeting labeled performance review is actually a surprise birthday party</div>
+          <div class="answer-option">Pranks should be punishable by prison and a steep fine</div>
+        </div>
+        <strong>View today’s results →</strong>
+      </div>
+    </div>
+  </section>
 
-        <article class="card section-card">
-          <h2>Privacy and Safety</h2>
-          <p>
-            Ping is designed to make team patterns visible without turning individual answers into
-            management ammunition.
-          </p>
-          <p>
-            Team insights are written at the group level. The AI is instructed not to single out
-            individuals, diagnose people, or identify someone as the source of a problem.
-          </p>
-          <p>
-            The match feature is designed to create connection, not exposure. It shows shared
-            answers and common ground, especially the kind that can help people feel less alone.
-          </p>
-        </article>
-      </section>
-
-      <section class="card section-card">
-        <h2>Beta Testing</h2>
-        <p>
-          Ping is currently in beta.
-        </p>
-        <p>
-          That means the app is real, but still being tested with friends, family, and early users
-          before a broader launch.
-        </p>
-        <div class="callout-block">
-          <p>As a beta tester, you are helping answer a few important questions:</p>
+  <section>
+    <div class="panel">
+      <h2 class="section-title">Ping does this, not this.</h2>
+      <div class="does-grid">
+        <div class="does">
+          <h3>✓ Ping does this</h3>
           <ul>
-            <li>Is the app easy to install and open?</li>
-            <li>Do the daily questions feel fun enough to answer?</li>
-            <li>Are the results interesting?</li>
-            <li>Does the app feel friendly, clear, and worth coming back to?</li>
-            <li>Are there any bugs, confusing screens, or moments where something feels off?</li>
+            <li>Creates shared moments of connection every day.</li>
+            <li>Encourages openness through transparency.</li>
+            <li>Highlights patterns to inspire positive action.</li>
+            <li>Offers ideas that help teams care for each other.</li>
+            <li>Builds a culture of trust, empathy, and humanity.</li>
           </ul>
         </div>
-        <p>
-          You do not need to be technical. You just need to try it, answer the questions, and tell
-          us what you notice.
-        </p>
-      </section>
-
-      <section class="card section-card download-card">
-        <h2>Download the Beta App</h2>
-        <p>
-          The current packaged version of Ping can be downloaded here:
-        </p>
-        <div class="hero-actions">
-          <a class="button-primary" href="https://drive.google.com/file/d/1QKrHTmKNB8JbvT1mA8kPzAw9qd_RCdLH/view?usp=share_link">Download Ping Beta App</a>
+        <div class="not">
+          <h3>✕ Ping is not this</h3>
+          <ul>
+            <li>A tool for surveillance or employee monitoring.</li>
+            <li>Data locked away for managers or HR.</li>
+            <li>AI that calls out problems or individuals.</li>
+            <li>A way to evaluate, score, or rank people.</li>
+            <li>Another system that creates fear or distance.</li>
+          </ul>
         </div>
-        <p>
-          After downloading, open the app and follow the setup instructions. Since this is a beta
-          version, your computer may warn you that the app is from an unidentified developer. That
-          is expected during early testing.
-        </p>
-        <p>
-          If anything breaks, looks weird, or feels confusing, please send a note with what
-          happened and, if possible, a screenshot.
-        </p>
-      </section>
-    </main>
+      </div>
+    </div>
+  </section>
 
-    <footer class="site-footer card">
-      <div>
-        <h2>Ping</h2>
-        <p>One question. Every day. Better together.</p>
-        <p class="footer-muted">Currently in beta testing.</p>
+  <section>
+    <h2 class="section-title">Real insights. Human impact.</h2>
+    <div class="examples">
+      <div class="example-card">
+        <span class="label">Example Insight</span>
+        <h3>Recharge in different ways</h3>
+        <p>Your team recharges in many ways. Here’s an idea for a Recharge Day that honors everyone.</p>
+        <div class="recharge-path">
+          <div class="path-item">Social connection<br /><small>Team lunch</small></div>
+          <div class="path-item">Solo recharge<br /><small>Quiet time</small></div>
+          <div class="path-item">Active renewal<br /><small>Walk or movement</small></div>
+        </div>
       </div>
-      <div>
-        <p class="footer-muted">Questions or feedback? Contact: PASTE_CONTACT_EMAIL_HERE</p>
+
+      <div class="example-card">
+        <span class="label">Example Insight</span>
+        <h3>See each other more clearly</h3>
+        <p>You value creativity, humor, and support. Lean into what brings your team together.</p>
+        <div class="chips">
+          <span class="chip">Creativity</span>
+          <span class="chip">Humor</span>
+          <span class="chip">Growth</span>
+          <span class="chip">Support</span>
+          <span class="chip">Kindness</span>
+          <span class="chip">Curiosity</span>
+        </div>
       </div>
-    </footer>
+
+      <div class="example-card">
+        <span class="label">Example Insight</span>
+        <h3>Small actions. Big difference.</h3>
+        <p>When people feel recognized, morale rises for everyone.</p>
+        <div class="path-item" style="text-align:left">
+          <strong>Try this this week:</strong><br /><br />
+          📣 Shout out one teammate<br />
+          ❔ Ask a curious question<br />
+          ⭐ Celebrate small wins
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Built on our values</h2>
+    <div class="values">
+      <div class="value">
+        <div class="icon">🛡️</div>
+        <strong>Privacy by design</strong>
+        <p>We protect your data and your trust.</p>
+      </div>
+      <div class="value">
+        <div class="icon">🔒</div>
+        <strong>People first</strong>
+        <p>Your answers belong to the people.</p>
+      </div>
+      <div class="value">
+        <div class="icon">🙂</div>
+        <strong>Always uplifting</strong>
+        <p>AI insights are positive, helpful, and actionable.</p>
+      </div>
+      <div class="value">
+        <div class="icon">👥</div>
+        <strong>Together, not top-down</strong>
+        <p>Everyone sees, learns, and grows together.</p>
+      </div>
+      <div class="value">
+        <div class="icon">💜</div>
+        <strong>More humanity at work</strong>
+        <p>When we know each other, we give grace, not judgment.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <div>
+      <h2>More than data. It’s human connection.</h2>
+      <p>As AI transforms the way we work, Ping brings us back to what matters most — knowing the humans beside us.</p>
+    </div>
+    <a class="button" href="#">Let’s build workplaces worth showing up for</a>
   </div>
+
+  <script src="assets/header-phrases.js"></script>
 </body>
 </html>

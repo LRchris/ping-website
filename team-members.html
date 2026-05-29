@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ping for Team Members</title>
+  <style>
+    :root {
+      --navy: #0f2a44;
+      --purple: #5a6fd8;
+      --teal: #2fb7a3;
+      --orange: #f5a623;
+      --teal-dark: #147c7c;
+      --yellow: #f2c94c;
+      --pink: #f45b8a;
+      --cream: #fff9ef;
+      --soft-purple: #f4f0ff;
+      --soft-teal: #eefcfb;
+      --soft-orange: #fff5e5;
+      --soft-pink: #fff0f5;
+      --border: #e8e3f4;
+      --text: #17203c;
+      --muted: #667085;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fffdf8 0%, #faf8ff 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    header {
+      height: 76px;
+      padding: 0 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,.92);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+      gap: 20px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+    .logo-image {
+      height: 56px;
+      width: auto;
+      display: block;
+    }
+    .script {
+      margin-left: 18px;
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 18px;
+      font-weight: 400;
+      opacity: .8;
+      white-space: nowrap;
+    }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 800;
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+    .site-nav a { opacity: .82; }
+    .site-nav a.active { opacity: 1; color: var(--teal-dark); }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: white;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 850;
+      box-shadow: 0 10px 24px rgba(47,183,163,.24);
+      white-space: nowrap;
+    }
+    section { padding: 54px 5vw; }
+    h1, h2, h3 { color: var(--navy); }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(44px, 5.8vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -2px;
+      margin: 0 0 26px;
+    }
+    h1 em { color: var(--teal); font-style: italic; }
+    h2 {
+      font-family: Georgia, serif;
+      font-size: 36px;
+      line-height: 1.12;
+      letter-spacing: -.6px;
+      margin: 0 0 18px;
+    }
+    .eyebrow {
+      color: var(--teal-dark);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 900;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+    .lead {
+      font-size: 20px;
+      line-height: 1.6;
+      max-width: 620px;
+      margin-bottom: 34px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 52px;
+      align-items: center;
+    }
+    .hero-features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .mini-feature { font-size: 13px; line-height: 1.45; }
+    .mini-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+    .purple-bg { background: rgba(90,111,216,.16); color: #4056b5; }
+    .teal-bg { background: rgba(47,183,163,.14); color: var(--teal-dark); }
+    .orange-bg { background: var(--soft-orange); color: var(--orange); }
+    .pink-bg { background: var(--soft-pink); color: var(--pink); }
+    .hero-visual {
+      min-height: 520px;
+      border-radius: 28px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.35), rgba(255,255,255,.05)),
+        url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1400&q=80");
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 22px 55px rgba(16,29,70,.13);
+    }
+    .phone {
+      width: 285px;
+      background: #101828;
+      border-radius: 38px;
+      padding: 12px;
+      position: absolute;
+      left: 12%;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 24px 50px rgba(16,29,70,.28);
+    }
+    .phone-inner {
+      background: white;
+      border-radius: 30px;
+      padding: 28px;
+      min-height: 430px;
+    }
+    .phone h3 { font-size: 27px; line-height: 1.18; margin: 18px 0 20px; }
+    .phone-answers {
+      display: grid;
+      gap: 10px;
+      margin: 0 0 22px;
+    }
+    .phone-answer {
+      padding: 11px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(15, 42, 68, 0.12);
+      background: rgba(47, 183, 163, 0.08);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .phone-answer.selected {
+      background: rgba(47, 183, 163, 0.16);
+      border-color: rgba(47, 183, 163, 0.42);
+      box-shadow: 0 8px 18px rgba(47, 183, 163, 0.14);
+    }
+    .sticky-note {
+      position: absolute;
+      background: rgba(255,255,255,.86);
+      backdrop-filter: blur(8px);
+      padding: 18px 20px;
+      border-radius: 24px;
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: 700;
+      color: var(--navy);
+      max-width: 170px;
+      box-shadow: 0 12px 28px rgba(16,29,70,.12);
+    }
+    .note-1 { left: 2%; top: 8%; background: #eee6ff; }
+    .note-2 { left: 3%; top: 38%; background: #e5fbf8; }
+    .note-3 { right: 5%; top: 9%; background: #fff1dc; }
+    .note-4 { right: 5%; bottom: 13%; background: #fff0f5; }
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: 0 16px 40px rgba(16,29,70,.06);
+      overflow: hidden;
+    }
+    .center { text-align: center; }
+    .sharing-section { padding: 38px; }
+    .sharing-grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .sharing-item {
+      padding: 34px 24px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .sharing-item:last-child { border-right: 0; }
+    .sharing-item .icon-box {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 18px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 32px;
+      background: #fbfaff;
+      box-shadow: 0 8px 22px rgba(16,29,70,.07);
+    }
+    .small-callout {
+      margin-top: 16px;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      background: var(--soft-teal);
+      color: #087b76;
+    }
+    .positivity {
+      display: grid;
+      grid-template-columns: .8fr repeat(4, 1fr);
+      gap: 28px;
+      padding: 42px;
+      background: linear-gradient(135deg, #f4fffd, #ffffff);
+      border-top: 1px solid var(--border);
+    }
+    .positivity p { line-height: 1.55; }
+    .value-card {
+      padding: 8px;
+      border-left: 1px solid var(--border);
+    }
+    .value-card .mini-icon { margin-bottom: 16px; }
+    .examples-section {
+      display: grid;
+      grid-template-columns: .65fr repeat(3, 1fr);
+      gap: 20px;
+      padding: 42px;
+      border-top: 1px solid var(--border);
+    }
+    .example-card {
+      border-radius: 20px;
+      padding: 26px;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .example-card:nth-child(2) { background: var(--soft-purple); }
+    .example-card:nth-child(3) { background: var(--soft-orange); }
+    .example-card:nth-child(4) { background: var(--soft-teal); }
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--purple);
+      font-weight: 900;
+      letter-spacing: .07em;
+      margin-bottom: 14px;
+    }
+    .recharge-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 18px 0;
+      text-align: center;
+      font-size: 12px;
+    }
+    .recharge-item {
+      background: rgba(255,255,255,.65);
+      border-radius: 14px;
+      padding: 12px 8px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+    .chip {
+      background: rgba(255,255,255,.72);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .testimonial-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      background: #fbfaff;
+    }
+    .testimonial {
+      padding: 34px;
+      border-right: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .testimonial:last-child { border-right: 0; }
+    .face {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d8d0ff, #fff2dc);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .testimonial p { margin: 0 0 12px; line-height: 1.45; font-weight: 700; }
+    .cta {
+      margin: 42px 5vw 64px;
+      border-radius: 28px;
+      padding: 42px;
+      background: linear-gradient(135deg, var(--navy), var(--teal-dark));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      box-shadow: 0 20px 45px rgba(113,88,232,.22);
+    }
+    .cta h2 { color: white; margin-bottom: 8px; }
+    .cta .button { background: white; color: var(--purple); box-shadow: none; }
+
+    @media (max-width: 1100px) { .script { display: none; } }
+    @media (max-width: 1050px) {
+      header { height: auto; padding: 18px 5vw; flex-wrap: wrap; }
+      .site-nav { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
+      .hero, .hero-features, .sharing-grid, .positivity, .examples-section, .testimonial-row { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 680px; }
+      .phone { left: 50%; transform: translate(-50%, -50%); }
+      .sharing-item, .testimonial { border-right: 0; border-bottom: 1px solid var(--border); }
+      .value-card { border-left: 0; border-top: 1px solid var(--border); padding-top: 24px; }
+      .cta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">
+      <img src="assets/primary-logo.svg" alt="Ping" class="logo-image" />
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="leaders.html">For Leaders</a>
+      <a href="team-members.html" class="active">For Team Members</a>
+    </nav>
+    <span class="script">Questions. People. Connection.</span>
+    <a class="button" href="#">Try Ping</a>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">For team members</div>
+      <h1>One Question, Ten seconds. Maybe your coworkers are weird too.</h1>
+      <p class="lead">
+        Workplaces feel more sterile and somehow also less safe than ever. But Ping is different. It's just a little fun thing you get to do every day. And maybe you learn something in the end, but that is optional.
+      </p>
+      <div class="hero-features">
+        <div class="mini-feature"><div class="mini-icon purple-bg">☺</div><strong>Quick & easy</strong><p>One question. Takes less than a minute.</p></div>
+        <div class="mini-feature"><div class="mini-icon teal-bg">👥</div><strong>Shared with everyone</strong><p>We’re all in it together. Answers belong to the team.</p></div>
+        <div class="mini-feature"><div class="mini-icon orange-bg">☀️</div><strong>Positive by design</strong><p>AI highlights what inspires, connects, and helps us grow.</p></div>
+        <div class="mini-feature"><div class="mini-icon pink-bg">♡</div><strong>Your voice matters</strong><p>Every answer adds to a clearer, kinder picture of our team.</p></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="sticky-note note-1">Thought-provoking questions</div>
+      <div class="sticky-note note-2">Real people, real answers</div>
+      <div class="sticky-note note-3">Discover what makes us tick</div>
+      <div class="sticky-note note-4">Insights that bring us closer</div>
+      <div class="phone">
+        <div class="phone-inner">
+          <small>☀ Today’s Question</small>
+          <h3>Would you eat deep-fried grasshoppers?</h3>
+          <div class="phone-answers">
+            <div class="phone-answer">Yes</div>
+            <div class="phone-answer">No</div>
+            <div class="phone-answer selected">I'll eat anything if you put it in a taco</div>
+            <div class="phone-answer">I regularly eat grasshoppers already</div>
+          </div>
+          <strong>See today’s results →</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="panel">
+      <div class="sharing-section center">
+        <h2>You already share at work — Ping is just better.</h2>
+        <p>
+          Workplaces already use surveys, ice breakers, team activities, recognition,
+          and personality profiles. Ping is the next evolution: more inclusive, more meaningful,
+          and more you.
+        </p>
+        <div class="sharing-grid">
+          <div class="sharing-item"><div class="icon-box purple-bg">📊</div><h3>Surveys & polls</h3><p>We share feedback to help the team improve.</p><div class="small-callout">Ping is more personal and ongoing.</div></div>
+          <div class="sharing-item"><div class="icon-box teal-bg">👥</div><h3>Ice breakers</h3><p>We learn fun facts to get to know each other.</p><div class="small-callout">Ping goes deeper and builds real understanding.</div></div>
+          <div class="sharing-item"><div class="icon-box orange-bg">🙂</div><h3>Personality profiles</h3><p>We explore how we work and communicate.</p><div class="small-callout">Ping is like that — but alive, daily, and for everyone.</div></div>
+          <div class="sharing-item"><div class="icon-box pink-bg">💞</div><h3>Team activities</h3><p>We do things together to build connection.</p><div class="small-callout">Ping makes connection a daily habit.</div></div>
+          <div class="sharing-item"><div class="icon-box teal-bg">⭐</div><h3>Recognition</h3><p>We celebrate wins and appreciate each other.</p><div class="small-callout">Ping surfaces more moments to celebrate every day.</div></div>
+        </div>
+      </div>
+
+      <div class="positivity">
+        <div>
+          <h2>Built for positivity. Designed for you.</h2>
+          <p>
+            Ping is not about finding problems or judging people. It’s about seeing the good,
+            understanding each other, and creating a workplace where we all can do our best work.
+          </p>
+        </div>
+        <div class="value-card"><div class="mini-icon teal-bg">🔒</div><h3>Safe & respectful</h3><p>Answers are shared with the whole team — not used to evaluate anyone.</p></div>
+        <div class="value-card"><div class="mini-icon teal-bg">✦</div><h3>Uplifting insights</h3><p>AI highlights strengths, patterns, and ideas that help us grow together.</p></div>
+        <div class="value-card"><div class="mini-icon teal-bg">👥</div><h3>Everyone included</h3><p>Not just managers. Not just a few people. Everyone’s voice shapes the picture.</p></div>
+        <div class="value-card"><div class="mini-icon teal-bg">🎯</div><h3>Action that helps</h3><p>Insights turn into small, human actions that make the team better — together.</p></div>
+      </div>
+
+      <div class="examples-section">
+        <div>
+          <h2>What it looks like in real life.</h2>
+          <p>Here are examples of the kinds of insights Ping brings to life.</p>
+        </div>
+        <div class="example-card">
+          <span class="label">Insight</span>
+          <h3>We recharge in different ways</h3>
+          <p>Knowing our preferences helps us support each other better.</p>
+          <div class="recharge-row">
+            <div class="recharge-item">👥<br /><strong>42%</strong><br />Social</div>
+            <div class="recharge-item">☀️<br /><strong>35%</strong><br />Solo</div>
+            <div class="recharge-item">📖<br /><strong>23%</strong><br />Active</div>
+          </div>
+          <p><strong>Idea:</strong> Plan a team recharge day with options for everyone.</p>
+        </div>
+        <div class="example-card">
+          <span class="label">Insight</span>
+          <h3>We value these most</h3>
+          <p>These strengths show up again and again in our answers.</p>
+          <div class="chips">
+            <span class="chip">Creativity</span>
+            <span class="chip">Support</span>
+            <span class="chip">Humor</span>
+            <span class="chip">Growth</span>
+            <span class="chip">Kindness</span>
+            <span class="chip">Curiosity</span>
+          </div>
+          <p><strong>Idea:</strong> Lean into these in how we work together.</p>
+        </div>
+        <div class="example-card">
+          <span class="label">Insight</span>
+          <h3>Small actions, big impact</h3>
+          <p>A little recognition goes a long way.</p>
+          <p>📣 Shout out one teammate</p>
+          <p>❔ Ask a curious question</p>
+          <p>⭐ Celebrate a small win</p>
+          <p><strong>Idea:</strong> Try one of these this week.</p>
+        </div>
+      </div>
+
+      <div class="testimonial-row">
+        <div class="testimonial"><div class="face">J</div><div><p>“It’s the highlight of my day. I learn something new about my coworkers every time.”</p><small>— Jess, Marketing</small></div></div>
+        <div class="testimonial"><div class="face">M</div><div><p>“It feels safe, fun, and actually brings us closer.”</p><small>— Marcus, Engineering</small></div></div>
+        <div class="testimonial"><div class="face">P</div><div><p>“We understand each other better — and that makes work easier.”</p><small>— Priya, Operations</small></div></div>
+        <div class="testimonial"><div class="face">A</div><div><p>“It’s like an ice breaker, a coach, and a team cheerleader all in one.”</p><small>— Alex, Product</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div>
+      <h2>Be part of something better.</h2>
+      <p>One question a day. A stronger team, every day.</p>
+    </div>
+    <a class="button" href="#">Get Started with Ping</a>
+  </div>
+  <script src="assets/header-phrases.js"></script>
+</body>
+</html>
