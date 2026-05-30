@@ -129,31 +129,36 @@
     }
     .hero-feature { font-size: 13px; line-height: 1.45; }
     .circle-icon {
-      width: 54px;
-      height: 54px;
-      border: 2px solid var(--purple);
-      color: var(--purple);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 26px;
+      width: 38px;
+      height: 38px;
+      display: block;
       margin-bottom: 12px;
+      object-fit: contain;
     }
+    .hero-features .hero-feature:nth-child(1) { color: var(--orange); }
+    .hero-features .hero-feature:nth-child(2) { color: var(--teal-dark); }
+    .hero-features .hero-feature:nth-child(3) { color: var(--purple); }
+    .hero-features .hero-feature:nth-child(4) { color: var(--navy); }
+    .hero-features .hero-feature:nth-child(1) .circle-icon { filter: invert(66%) sepia(81%) saturate(1219%) hue-rotate(350deg) brightness(101%) contrast(94%); }
+    .hero-features .hero-feature:nth-child(2) .circle-icon { filter: invert(22%) sepia(36%) saturate(2034%) hue-rotate(172deg) brightness(95%) contrast(89%); }
+    .hero-features .hero-feature:nth-child(3) .circle-icon { filter: invert(31%) sepia(18%) saturate(1033%) hue-rotate(194deg) brightness(92%) contrast(92%); }
+    .hero-features .hero-feature:nth-child(4) .circle-icon { filter: invert(18%) sepia(13%) saturate(1462%) hue-rotate(219deg) brightness(97%) contrast(94%); }
     .visual-card {
       border-radius: 28px;
       min-height: 520px;
       padding: 44px;
       color: var(--navy);
       background:
-        linear-gradient(180deg, rgba(255,255,255,.25), rgba(16,29,70,.65)),
-        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80");
-      background-size: cover;
-      background-position: center;
+        radial-gradient(circle at 18% 20%, rgba(245, 166, 35, 0.12), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(47, 183, 163, 0.12), transparent 24%),
+        radial-gradient(circle at 55% 72%, rgba(90, 111, 216, 0.1), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(240,245,255,.92));
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(16,29,70,.16);
+      box-shadow: 0 24px 60px rgba(16,29,70,.12);
+      border: 1px solid rgba(15, 42, 68, 0.08);
     }
     .visual-card h2 { font-family: Georgia, serif; font-size: 30px; line-height: 1.15; margin: 0 0 14px; }
     .visual-card p { max-width: 430px; font-size: 17px; line-height: 1.5; }
@@ -166,10 +171,15 @@
       align-items: center;
       overflow: hidden;
       box-shadow: 0 20px 44px rgba(16,29,70,.18);
+      border: 1px solid rgba(15, 42, 68, 0.06);
     }
     .vs-column { padding: 28px; }
     .vs-column h4 { margin: 0 0 18px; color: var(--navy); font-size: 16px; }
     .vs-column p { margin: 12px 0; font-size: 14px; }
+    .vs-column.without h4,
+    .vs-column.without p { color: var(--pink); }
+    .vs-column.with h4,
+    .vs-column.with p { color: var(--teal-dark); }
     .vs-bubble {
       width: 52px;
       height: 52px;
@@ -298,6 +308,173 @@
       margin-bottom: 8px;
     }
     .metric .icon { font-size: 38px; color: var(--purple); }
+    .live-poll {
+      display: grid;
+      grid-template-columns: .48fr 1.52fr;
+      border-top: 1px solid var(--border);
+      min-height: 300px;
+    }
+    .poll-copy,
+    .poll-panel {
+      padding: 28px 24px;
+    }
+    .poll-copy {
+      border-right: 1px solid var(--border);
+      background: linear-gradient(180deg, #fcfbff, #f8fbff);
+    }
+    .poll-copy h3 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.22;
+      color: var(--navy);
+    }
+    .poll-intro {
+      margin: 12px 0 14px;
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 800;
+      letter-spacing: .02em;
+      color: var(--purple);
+      text-transform: uppercase;
+    }
+    .poll-panel {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      perspective: 1200px;
+      background: linear-gradient(180deg, #ffffff, #fbfcff);
+    }
+    .poll-card {
+      width: 100%;
+      max-width: 620px;
+      min-height: 228px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .7s ease;
+      margin-top: -4px;
+    }
+    .poll-card.is-flipped {
+      transform: rotateY(180deg);
+    }
+    .poll-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      padding: 8px 0 0;
+    }
+    .poll-face.results {
+      transform: rotateY(180deg);
+      background: linear-gradient(180deg, #ffffff, #fbfcff);
+    }
+    .poll-question {
+      font-size: 22px;
+      line-height: 1.3;
+      color: var(--navy);
+      margin: 6px 0 22px;
+      font-weight: 800;
+      display: none;
+    }
+    .poll-options {
+      display: grid;
+      gap: 10px;
+    }
+    .poll-prompt {
+      margin: 0 0 14px;
+      font-size: 16px;
+      line-height: 1.3;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .poll-option {
+      width: 100%;
+      border: 1px solid rgba(15, 42, 68, 0.1);
+      border-radius: 16px;
+      background: #f9fbff;
+      color: var(--navy);
+      padding: 11px 13px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.28;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .poll-option:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(16,29,70,.08);
+      border-color: rgba(90, 111, 216, 0.24);
+    }
+    .poll-meta {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+      display: none;
+    }
+    .results-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .results-header h4 {
+      margin: 0;
+      font-size: 22px;
+      color: var(--navy);
+    }
+    .results-header span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .poll-bars {
+      display: grid;
+      gap: 10px;
+    }
+    .poll-bar-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 54px;
+      align-items: center;
+      gap: 12px;
+    }
+    .poll-bar-label {
+      font-size: 14px;
+      color: var(--navy);
+      font-weight: 800;
+    }
+    .poll-bar-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #edf1f8;
+      overflow: hidden;
+    }
+    .poll-bar-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--purple), var(--teal));
+      transition: width .6s ease;
+    }
+    .poll-bar-value {
+      text-align: right;
+      font-size: 14px;
+      color: var(--navy);
+      font-weight: 800;
+    }
+    .poll-reset {
+      margin-top: 20px;
+      border: 0;
+      background: transparent;
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 0;
+    }
     .how-section {
       display: grid;
       grid-template-columns: .75fr 1.25fr;
@@ -342,6 +519,26 @@
       padding: 10px 14px;
       font-weight: 800;
       font-size: 13px;
+    }
+    .signal-list {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 0;
+    }
+    .signal-item {
+      border-radius: 16px;
+      background: var(--soft-purple);
+      padding: 16px;
+    }
+    .signal-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--navy);
+    }
+    .signal-item p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
     }
     .cta {
       margin: 42px 5vw 64px;
@@ -397,22 +594,22 @@
       </p>
       <div class="hero-features">
         <div class="hero-feature">
-          <div class="circle-icon">♡</div>
+          <img class="circle-icon" src="assets/megaphone.svg" alt="" />
           <strong>Amplify your best motivations</strong>
           <p>Ping makes it easier to be the kind of leader you want to be.</p>
         </div>
         <div class="hero-feature">
-          <div class="circle-icon">👂</div>
+          <img class="circle-icon" src="assets/ear.svg" alt="" />
           <strong>Listen first, always</strong>
           <p>Give every voice a seat at the table — every day.</p>
         </div>
         <div class="hero-feature">
-          <div class="circle-icon">👥</div>
+          <img class="circle-icon" src="assets/eye.svg" alt="" />
           <strong>See the whole human</strong>
           <p>Discover what brings your team together and what they need to thrive.</p>
         </div>
         <div class="hero-feature">
-          <div class="circle-icon">↗</div>
+          <img class="circle-icon" src="assets/clapperboard.svg" alt="" />
           <strong>Act with clarity and care</strong>
           <p>Get AI-powered insights that inspire positive, human-centered action.</p>
         </div>
@@ -430,7 +627,7 @@
       </div>
 
       <div class="vs-card">
-        <div class="vs-column">
+        <div class="vs-column without">
           <h4>Without Ping</h4>
           <p>× Disconnected teams</p>
           <p>× Assumptions over truth</p>
@@ -439,7 +636,7 @@
           <p>× Reactive leadership</p>
         </div>
         <div class="vs-bubble">vs.</div>
-        <div class="vs-column">
+        <div class="vs-column with">
           <h4>With Ping</h4>
           <p>✓ Connected, trusting teams</p>
           <p>✓ Shared understanding</p>
@@ -453,18 +650,6 @@
 
   <section>
     <div class="panel">
-      <div style="padding: 34px 34px 0;">
-        <h2 class="section-title">Real value for leaders. Real impact for teams.</h2>
-      </div>
-
-      <div class="value-row">
-        <div class="value-item"><div class="big-icon">💞</div><h3>Stronger culture</h3><p>Build trust, belonging, and psychological safety through everyday connection.</p></div>
-        <div class="value-item"><div class="big-icon">💬</div><h3>Better decisions</h3><p>Make choices with more context and empathy — not just metrics.</p></div>
-        <div class="value-item"><div class="big-icon">🌱</div><h3>Higher engagement</h3><p>People feel valued, heard, and more invested in the team and mission.</p></div>
-        <div class="value-item"><div class="big-icon">🛡️</div><h3>Retain your people</h3><p>When people feel seen and supported, they’re more likely to stay.</p></div>
-        <div class="value-item"><div class="big-icon">☀️</div><h3>More humanity at work</h3><p>Create a workplace people are proud to be part of — especially in the age of AI.</p></div>
-      </div>
-
       <div class="fit-section">
         <div>
           <div class="eyebrow">Where Ping fits</div>
@@ -528,35 +713,52 @@
 
         <div class="insight-card">
           <small>☼ Today’s insight</small>
-          <h3>Your team recharges in different ways.</h3>
-          <p>Celebrating these differences can help everyone thrive.</p>
-          <div class="recharge-grid">
-            <div class="recharge"><strong>Social Connection</strong><p>Enjoys time with others and group activities.</p><strong>42%</strong></div>
-            <div class="recharge"><strong>Solo Recharge</strong><p>Values quiet time and personal space.</p><strong>35%</strong></div>
-            <div class="recharge"><strong>Active Renewal</strong><p>Recharges through movement and activity.</p><strong>23%</strong></div>
-          </div>
-          <h4>AI recommendation</h4>
-          <p>Consider a Recharge Day with options for everyone:</p>
-          <div class="recommendations">
-            <span class="pill">🍽 Team lunch</span>
-            <span class="pill">🌿 Quiet time</span>
-            <span class="pill">🏁 Early finish</span>
-            <span class="pill">🚶 Movement break</span>
+          <h3>Your team seems friendly and capable, but not fully open with each other yet.</h3>
+          <p>Responses suggest the group has good baseline warmth and competence, but trust and candor may still be uneven. The team does not appear in crisis. It looks more like a group that could become much stronger if people felt safer being direct earlier.</p>
+          <div class="signal-list">
+            <div class="signal-item">
+              <strong>What seems strong</strong>
+              <p>People appear to like each other and bring generally positive energy into the team.</p>
+            </div>
+            <div class="signal-item">
+              <strong>What to watch</strong>
+              <p>Clarity and trust may not be landing equally for everyone, which can quietly slow momentum.</p>
+            </div>
+            <div class="signal-item">
+              <strong>Leader move</strong>
+              <p>Use a short team check-in to ask what would make collaboration feel easier or clearer next week, then name one concrete adjustment.</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="metric-row">
-        <div class="quote">
-          <div class="eyebrow">Leaders love Ping</div>
-          <p>“Ping has completely changed how we connect. It’s not another survey — it’s our daily reminder that we’re humans first.”</p>
-          <strong>— Sarah J.</strong><br />
-          <small>CEO, People-First Tech Company</small>
+      <div class="live-poll">
+        <div class="poll-copy">
+          <div class="eyebrow">Real talk for people leaders</div>
+          <div class="poll-intro">Here is a real live Ping question right here.</div>
+          <h3>What is the worst thing about legacy employee survey tools?</h3>
         </div>
-        <div class="metric"><div class="icon">👥</div><strong>92%</strong><p>of leaders say Ping helps them understand their teams more deeply</p></div>
-        <div class="metric"><div class="icon">🙂</div><strong>89%</strong><p>of teams feel more connected and appreciated since using Ping</p></div>
-        <div class="metric"><div class="icon">📈</div><strong>86%</strong><p>of leaders say Ping helps them make better, more human decisions</p></div>
-        <div class="metric"><div class="icon">💰</div><strong>50%+</strong><p>lower cost compared to traditional listening and personality assessments</p></div>
+        <div class="poll-panel">
+          <div class="poll-card" id="leader-poll-card">
+            <div class="poll-face question">
+              <div class="poll-prompt">Vote here and instantly see the results, just like Ping.</div>
+              <div class="poll-options">
+                <button class="poll-option" data-option="expense">it costs like $500,000 per year</button>
+                <button class="poll-option" data-option="difficulty">you need the entire Council of Elrond and 2 of the 3 wise men to make it work</button>
+                <button class="poll-option" data-option="survey_burnout">you can only ask ~40 questions per year before people stop responding</button>
+                <button class="poll-option" data-option="trust_issues">you know deep in your heart people aren't being honest anyways.</button>
+              </div>
+            </div>
+            <div class="poll-face results">
+              <div class="results-header">
+                <h4>Lifetime results</h4>
+                <span id="leader-poll-total">0 votes</span>
+              </div>
+              <div class="poll-bars" id="leader-poll-results"></div>
+              <button class="poll-reset" id="leader-poll-reset" type="button">Reset my vote</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -575,5 +777,114 @@
     </div>
   </div>
   <script src="assets/header-phrases.js"></script>
+  <script>
+    (function () {
+      const STORAGE_KEY = 'pingWebsiteLeaderPollV1';
+      const VOTE_KEY = 'pingWebsiteLeaderPollVoteV1';
+      const seedCounts = {
+        expense: 18,
+        difficulty: 24,
+        survey_burnout: 31,
+        trust_issues: 27
+      };
+      const labels = {
+        expense: 'Expense',
+        difficulty: 'Difficulty',
+        survey_burnout: 'Survey burnout',
+        trust_issues: 'Trust issues'
+      };
+
+      const card = document.getElementById('leader-poll-card');
+      const resultsEl = document.getElementById('leader-poll-results');
+      const totalEl = document.getElementById('leader-poll-total');
+      const resetButton = document.getElementById('leader-poll-reset');
+      if (!card || !resultsEl || !totalEl || !resetButton) return;
+
+      function getCounts() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return { ...seedCounts };
+          return { ...seedCounts, ...JSON.parse(raw) };
+        } catch {
+          return { ...seedCounts };
+        }
+      }
+
+      function saveCounts(counts) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
+      }
+
+      function getTotal(counts) {
+        return Object.values(counts).reduce((sum, value) => sum + value, 0);
+      }
+
+      function renderResults() {
+        const counts = getCounts();
+        const total = getTotal(counts);
+        totalEl.textContent = total + (total === 1 ? ' vote' : ' votes');
+        resultsEl.innerHTML = '';
+
+        Object.entries(labels).forEach(([key, label]) => {
+          const count = counts[key] || 0;
+          const percentage = total ? Math.round((count / total) * 100) : 0;
+
+          const row = document.createElement('div');
+          row.className = 'poll-bar-row';
+          row.innerHTML = `
+            <div class="poll-bar-label">${label}</div>
+            <div class="poll-bar-track">
+              <div class="poll-bar-fill" style="width:${percentage}%"></div>
+            </div>
+            <div class="poll-bar-value">${percentage}%</div>
+          `;
+          resultsEl.appendChild(row);
+        });
+      }
+
+      function showResults() {
+        renderResults();
+        card.classList.add('is-flipped');
+      }
+
+      document.querySelectorAll('.poll-option').forEach((button) => {
+        button.addEventListener('click', () => {
+          const selected = button.dataset.option;
+          if (!selected) return;
+
+          const previousVote = localStorage.getItem(VOTE_KEY);
+          const counts = getCounts();
+
+          if (!previousVote) {
+            counts[selected] = (counts[selected] || 0) + 1;
+            saveCounts(counts);
+            localStorage.setItem(VOTE_KEY, selected);
+          }
+
+          showResults();
+        });
+      });
+
+      resetButton.addEventListener('click', () => {
+        const previousVote = localStorage.getItem(VOTE_KEY);
+        if (!previousVote) {
+          card.classList.remove('is-flipped');
+          return;
+        }
+
+        const counts = getCounts();
+        counts[previousVote] = Math.max(seedCounts[previousVote] || 0, (counts[previousVote] || 0) - 1);
+        saveCounts(counts);
+        localStorage.removeItem(VOTE_KEY);
+        renderResults();
+        card.classList.remove('is-flipped');
+      });
+
+      if (localStorage.getItem(VOTE_KEY)) {
+        showResults();
+      } else {
+        renderResults();
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -98,6 +98,10 @@
       margin: 0 0 26px;
     }
     h1 em { color: var(--teal); font-style: italic; }
+    .hero-accent {
+      color: var(--teal);
+      font-style: italic;
+    }
     h2 {
       font-family: Georgia, serif;
       font-size: 36px;
@@ -124,6 +128,7 @@
       grid-template-columns: .95fr 1.05fr;
       gap: 52px;
       align-items: center;
+      position: relative;
     }
     .hero-features {
       display: grid;
@@ -132,29 +137,55 @@
     }
     .mini-feature { font-size: 13px; line-height: 1.45; }
     .mini-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 26px;
+      width: 38px;
+      height: 38px;
+      display: block;
       margin-bottom: 12px;
+      object-fit: contain;
     }
-    .purple-bg { background: rgba(90,111,216,.16); color: #4056b5; }
-    .teal-bg { background: rgba(47,183,163,.14); color: var(--teal-dark); }
-    .orange-bg { background: var(--soft-orange); color: var(--orange); }
-    .pink-bg { background: var(--soft-pink); color: var(--pink); }
+    .hero-features .mini-feature:nth-child(1) { color: #67b856; }
+    .hero-features .mini-feature:nth-child(2) { color: var(--teal-dark); }
+    .hero-features .mini-feature:nth-child(3) { color: var(--yellow); }
+    .hero-features .mini-feature:nth-child(4) { color: var(--pink); }
+    .hero-features .mini-feature:nth-child(1) .mini-icon { filter: invert(57%) sepia(89%) saturate(410%) hue-rotate(86deg) brightness(99%) contrast(92%); }
+    .hero-features .mini-feature:nth-child(2) .mini-icon { filter: invert(52%) sepia(35%) saturate(2023%) hue-rotate(171deg) brightness(95%) contrast(94%); }
+    .hero-features .mini-feature:nth-child(3) .mini-icon { filter: invert(84%) sepia(56%) saturate(849%) hue-rotate(339deg) brightness(101%) contrast(95%); }
+    .hero-features .mini-feature:nth-child(4) .mini-icon { filter: invert(50%) sepia(64%) saturate(2233%) hue-rotate(319deg) brightness(100%) contrast(96%); }
     .hero-visual {
       min-height: 520px;
-      border-radius: 28px;
       background:
-        linear-gradient(90deg, rgba(255,255,255,.35), rgba(255,255,255,.05)),
-        url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1400&q=80");
-      background-size: cover;
-      background-position: center;
+        radial-gradient(circle at 26% 24%, rgba(103, 184, 86, 0.1), transparent 24%),
+        radial-gradient(circle at 78% 22%, rgba(242, 201, 76, 0.1), transparent 22%),
+        radial-gradient(circle at 52% 78%, rgba(244, 91, 138, 0.08), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,0));
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 22px 55px rgba(16,29,70,.13);
+      overflow: visible;
+    }
+    .hero-network {
+      position: absolute;
+      inset: -36px -12px 20px -12px;
+      pointer-events: none;
+      opacity: .95;
+    }
+    .hero-network svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: blur(.28px);
+      transform: translateY(-20px);
+    }
+    .hero-network .link {
+      stroke: rgba(126, 136, 154, 0.32);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+    .hero-network .link.faint {
+      stroke: rgba(126, 136, 154, 0.17);
+      stroke-width: 1.2;
+    }
+    .hero-network .node {
+      stroke: rgba(255,255,255,0.9);
+      stroke-width: 3;
     }
     .phone {
       width: 285px;
@@ -166,6 +197,7 @@
       top: 50%;
       transform: translateY(-50%);
       box-shadow: 0 24px 50px rgba(16,29,70,.28);
+      z-index: 2;
     }
     .phone-inner {
       background: white;
@@ -194,23 +226,6 @@
       border-color: rgba(47, 183, 163, 0.42);
       box-shadow: 0 8px 18px rgba(47, 183, 163, 0.14);
     }
-    .sticky-note {
-      position: absolute;
-      background: rgba(255,255,255,.86);
-      backdrop-filter: blur(8px);
-      padding: 18px 20px;
-      border-radius: 24px;
-      font-family: Georgia, serif;
-      font-style: italic;
-      font-weight: 700;
-      color: var(--navy);
-      max-width: 170px;
-      box-shadow: 0 12px 28px rgba(16,29,70,.12);
-    }
-    .note-1 { left: 2%; top: 8%; background: #eee6ff; }
-    .note-2 { left: 3%; top: 38%; background: #e5fbf8; }
-    .note-3 { right: 5%; top: 9%; background: #fff1dc; }
-    .note-4 { right: 5%; bottom: 13%; background: #fff0f5; }
     .panel {
       background: white;
       border: 1px solid var(--border);
@@ -240,10 +255,20 @@
       border-radius: 20px;
       display: grid;
       place-items: center;
-      font-size: 32px;
       background: #fbfaff;
       box-shadow: 0 8px 22px rgba(16,29,70,.07);
     }
+    .sharing-item .icon-box img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      display: block;
+    }
+    .sharing-item:nth-child(1) .icon-box img { filter: invert(66%) sepia(81%) saturate(1219%) hue-rotate(350deg) brightness(101%) contrast(94%); }
+    .sharing-item:nth-child(2) .icon-box img { filter: invert(42%) sepia(76%) saturate(829%) hue-rotate(15deg) brightness(96%) contrast(94%); }
+    .sharing-item:nth-child(3) .icon-box img { filter: invert(56%) sepia(59%) saturate(497%) hue-rotate(86deg) brightness(99%) contrast(91%); }
+    .sharing-item:nth-child(4) .icon-box img { filter: invert(55%) sepia(61%) saturate(1911%) hue-rotate(322deg) brightness(101%) contrast(95%); }
+    .sharing-item:nth-child(5) .icon-box img { filter: invert(84%) sepia(56%) saturate(849%) hue-rotate(339deg) brightness(101%) contrast(95%); }
     .small-callout {
       margin-top: 16px;
       border-radius: 12px;
@@ -266,7 +291,17 @@
       padding: 8px;
       border-left: 1px solid var(--border);
     }
-    .value-card .mini-icon { margin-bottom: 16px; }
+    .value-card .mini-icon {
+      width: 42px;
+      height: 42px;
+      display: block;
+      margin: 0 auto 16px;
+      object-fit: contain;
+    }
+    .value-card:nth-child(2) .mini-icon { filter: invert(17%) sepia(14%) saturate(1555%) hue-rotate(214deg) brightness(92%) contrast(94%); }
+    .value-card:nth-child(3) .mini-icon { filter: invert(84%) sepia(56%) saturate(849%) hue-rotate(339deg) brightness(101%) contrast(95%); }
+    .value-card:nth-child(4) .mini-icon { filter: invert(20%) sepia(11%) saturate(1488%) hue-rotate(218deg) brightness(98%) contrast(95%); }
+    .value-card:nth-child(5) .mini-icon { filter: invert(56%) sepia(93%) saturate(1020%) hue-rotate(352deg) brightness(103%) contrast(94%); }
     .examples-section {
       display: grid;
       grid-template-columns: .65fr repeat(3, 1fr);
@@ -291,6 +326,68 @@
       font-weight: 900;
       letter-spacing: .07em;
       margin-bottom: 14px;
+    }
+    .poll-result-card {
+      margin-top: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(15, 42, 68, 0.08);
+      padding: 18px;
+    }
+    .poll-question-small {
+      margin: 0 0 16px;
+      font-size: 16px;
+      line-height: 1.35;
+      color: var(--navy);
+      font-weight: 800;
+    }
+    .color-bars {
+      display: grid;
+      gap: 10px;
+    }
+    .color-bar-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 44px;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .color-swatch-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .color-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      flex: 0 0 auto;
+    }
+    .color-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(15, 42, 68, 0.08);
+      overflow: hidden;
+    }
+    .color-fill {
+      height: 100%;
+      border-radius: inherit;
+      width: var(--fill, 40%);
+      background: var(--fill-color, var(--teal));
+    }
+    .insight-voice {
+      margin-top: 18px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--navy);
+    }
+    .insight-voice strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+      line-height: 1.3;
     }
     .recharge-row {
       display: grid;
@@ -385,23 +482,131 @@
   <section class="hero">
     <div>
       <div class="eyebrow">For team members</div>
-      <h1>One Question, Ten seconds. Maybe your coworkers are weird too.</h1>
+      <h1>One Question, Ten seconds. <span class="hero-accent">Maybe your coworkers are weird too.</span></h1>
       <p class="lead">
         Workplaces feel more sterile and somehow also less safe than ever. But Ping is different. It's just a little fun thing you get to do every day. And maybe you learn something in the end, but that is optional.
       </p>
       <div class="hero-features">
-        <div class="mini-feature"><div class="mini-icon purple-bg">☺</div><strong>Quick & easy</strong><p>One question. Takes less than a minute.</p></div>
-        <div class="mini-feature"><div class="mini-icon teal-bg">👥</div><strong>Shared with everyone</strong><p>We’re all in it together. Answers belong to the team.</p></div>
-        <div class="mini-feature"><div class="mini-icon orange-bg">☀️</div><strong>Positive by design</strong><p>AI highlights what inspires, connects, and helps us grow.</p></div>
-        <div class="mini-feature"><div class="mini-icon pink-bg">♡</div><strong>Your voice matters</strong><p>Every answer adds to a clearer, kinder picture of our team.</p></div>
+        <div class="mini-feature"><img class="mini-icon" src="assets/smile.svg" alt="" /><strong>Quick & easy</strong><p>One question. Takes less than a minute.</p></div>
+        <div class="mini-feature"><img class="mini-icon" src="assets/boom-box.svg" alt="" /><strong>Shared with everyone</strong><p>We’re all in it together. Answers belong to the team.</p></div>
+        <div class="mini-feature"><img class="mini-icon" src="assets/sun.svg" alt="" /><strong>Positive by design</strong><p>AI highlights what inspires, connects, and helps us grow.</p></div>
+        <div class="mini-feature"><img class="mini-icon" src="assets/heart.svg" alt="" /><strong>Your voice matters</strong><p>Every answer adds to a clearer, kinder picture of our team.</p></div>
       </div>
     </div>
 
     <div class="hero-visual">
-      <div class="sticky-note note-1">Thought-provoking questions</div>
-      <div class="sticky-note note-2">Real people, real answers</div>
-      <div class="sticky-note note-3">Discover what makes us tick</div>
-      <div class="sticky-note note-4">Insights that bring us closer</div>
+      <div class="hero-network" aria-hidden="true">
+        <svg viewBox="0 0 760 560" preserveAspectRatio="xMidYMid meet">
+          <line class="link" x1="132" y1="210" x2="196" y2="170" />
+          <line class="link" x1="132" y1="210" x2="196" y2="250" />
+          <line class="link faint" x1="132" y1="210" x2="248" y2="210" />
+          <line class="link" x1="196" y1="170" x2="248" y2="210" />
+          <line class="link" x1="196" y1="250" x2="248" y2="210" />
+          <line class="link faint" x1="196" y1="170" x2="280" y2="150" />
+          <line class="link faint" x1="196" y1="250" x2="280" y2="270" />
+          <line class="link" x1="248" y1="210" x2="318" y2="180" />
+          <line class="link" x1="248" y1="210" x2="318" y2="240" />
+          <line class="link faint" x1="248" y1="210" x2="354" y2="210" />
+          <line class="link" x1="280" y1="150" x2="318" y2="180" />
+          <line class="link" x1="280" y1="270" x2="318" y2="240" />
+          <line class="link faint" x1="280" y1="150" x2="354" y2="210" />
+          <line class="link faint" x1="280" y1="270" x2="354" y2="210" />
+          <line class="link" x1="318" y1="180" x2="354" y2="210" />
+          <line class="link" x1="318" y1="240" x2="354" y2="210" />
+          <line class="link" x1="354" y1="210" x2="428" y2="176" />
+          <line class="link" x1="354" y1="210" x2="428" y2="244" />
+          <line class="link faint" x1="354" y1="210" x2="470" y2="210" />
+          <line class="link" x1="428" y1="176" x2="470" y2="210" />
+          <line class="link" x1="428" y1="244" x2="470" y2="210" />
+          <line class="link faint" x1="428" y1="176" x2="514" y2="158" />
+          <line class="link faint" x1="428" y1="244" x2="514" y2="262" />
+          <line class="link" x1="470" y1="210" x2="542" y2="178" />
+          <line class="link" x1="470" y1="210" x2="542" y2="242" />
+          <line class="link" x1="514" y1="158" x2="542" y2="178" />
+          <line class="link" x1="514" y1="262" x2="542" y2="242" />
+          <line class="link faint" x1="542" y1="178" x2="610" y2="208" />
+          <line class="link faint" x1="542" y1="242" x2="610" y2="208" />
+          <line class="link" x1="610" y1="208" x2="654" y2="182" />
+          <line class="link" x1="610" y1="208" x2="654" y2="234" />
+
+          <line class="link faint" x1="108" y1="236" x2="132" y2="210" />
+          <line class="link faint" x1="108" y1="236" x2="196" y2="250" />
+          <line class="link faint" x1="150" y1="150" x2="132" y2="210" />
+          <line class="link faint" x1="150" y1="150" x2="196" y2="170" />
+          <line class="link faint" x1="150" y1="150" x2="248" y2="210" />
+          <line class="link faint" x1="158" y1="286" x2="196" y2="250" />
+          <line class="link faint" x1="158" y1="286" x2="248" y2="210" />
+          <line class="link faint" x1="222" y1="126" x2="196" y2="170" />
+          <line class="link faint" x1="222" y1="126" x2="280" y2="150" />
+          <line class="link faint" x1="222" y1="126" x2="318" y2="180" />
+          <line class="link faint" x1="226" y1="292" x2="196" y2="250" />
+          <line class="link faint" x1="226" y1="292" x2="280" y2="270" />
+          <line class="link faint" x1="226" y1="292" x2="318" y2="240" />
+          <line class="link faint" x1="300" y1="120" x2="280" y2="150" />
+          <line class="link faint" x1="300" y1="120" x2="318" y2="180" />
+          <line class="link faint" x1="300" y1="120" x2="354" y2="210" />
+          <line class="link faint" x1="302" y1="304" x2="280" y2="270" />
+          <line class="link faint" x1="302" y1="304" x2="318" y2="240" />
+          <line class="link faint" x1="302" y1="304" x2="354" y2="210" />
+          <line class="link faint" x1="392" y1="122" x2="354" y2="210" />
+          <line class="link faint" x1="392" y1="122" x2="428" y2="176" />
+          <line class="link faint" x1="392" y1="122" x2="470" y2="210" />
+          <line class="link faint" x1="392" y1="298" x2="354" y2="210" />
+          <line class="link faint" x1="392" y1="298" x2="428" y2="244" />
+          <line class="link faint" x1="392" y1="298" x2="470" y2="210" />
+          <line class="link faint" x1="482" y1="126" x2="428" y2="176" />
+          <line class="link faint" x1="482" y1="126" x2="514" y2="158" />
+          <line class="link faint" x1="482" y1="126" x2="542" y2="178" />
+          <line class="link faint" x1="486" y1="292" x2="428" y2="244" />
+          <line class="link faint" x1="486" y1="292" x2="514" y2="262" />
+          <line class="link faint" x1="486" y1="292" x2="542" y2="242" />
+          <line class="link faint" x1="576" y1="132" x2="514" y2="158" />
+          <line class="link faint" x1="576" y1="132" x2="542" y2="178" />
+          <line class="link faint" x1="576" y1="132" x2="610" y2="208" />
+          <line class="link faint" x1="578" y1="284" x2="514" y2="262" />
+          <line class="link faint" x1="578" y1="284" x2="542" y2="242" />
+          <line class="link faint" x1="578" y1="284" x2="610" y2="208" />
+          <line class="link faint" x1="642" y1="146" x2="610" y2="208" />
+          <line class="link faint" x1="642" y1="146" x2="654" y2="182" />
+          <line class="link faint" x1="642" y1="270" x2="610" y2="208" />
+          <line class="link faint" x1="642" y1="270" x2="654" y2="234" />
+
+          <circle class="node" cx="108" cy="236" r="10" fill="#67b856" />
+          <circle class="node" cx="132" cy="210" r="12" fill="#67b856" />
+          <circle class="node" cx="150" cy="150" r="10" fill="#67b856" />
+          <circle class="node" cx="158" cy="286" r="10" fill="#67b856" />
+          <circle class="node" cx="196" cy="170" r="12" fill="#67b856" />
+          <circle class="node" cx="196" cy="250" r="12" fill="#67b856" />
+          <circle class="node" cx="222" cy="126" r="10" fill="#147c7c" />
+          <circle class="node" cx="226" cy="292" r="10" fill="#147c7c" />
+          <circle class="node" cx="248" cy="210" r="14" fill="#147c7c" />
+          <circle class="node" cx="280" cy="150" r="12" fill="#147c7c" />
+          <circle class="node" cx="280" cy="270" r="12" fill="#147c7c" />
+          <circle class="node" cx="300" cy="120" r="10" fill="#f2c94c" />
+          <circle class="node" cx="302" cy="304" r="10" fill="#f2c94c" />
+          <circle class="node" cx="318" cy="180" r="13" fill="#f2c94c" />
+          <circle class="node" cx="318" cy="240" r="13" fill="#f2c94c" />
+          <circle class="node" cx="354" cy="210" r="15" fill="#f45b8a" />
+          <circle class="node" cx="392" cy="122" r="10" fill="#f45b8a" />
+          <circle class="node" cx="392" cy="298" r="10" fill="#f45b8a" />
+          <circle class="node" cx="428" cy="176" r="12" fill="#f2c94c" />
+          <circle class="node" cx="428" cy="244" r="12" fill="#f2c94c" />
+          <circle class="node" cx="470" cy="210" r="14" fill="#147c7c" />
+          <circle class="node" cx="482" cy="126" r="10" fill="#147c7c" />
+          <circle class="node" cx="486" cy="292" r="10" fill="#147c7c" />
+          <circle class="node" cx="514" cy="158" r="12" fill="#67b856" />
+          <circle class="node" cx="514" cy="262" r="12" fill="#67b856" />
+          <circle class="node" cx="542" cy="178" r="12" fill="#67b856" />
+          <circle class="node" cx="542" cy="242" r="12" fill="#67b856" />
+          <circle class="node" cx="576" cy="132" r="10" fill="#f2c94c" />
+          <circle class="node" cx="578" cy="284" r="10" fill="#f2c94c" />
+          <circle class="node" cx="610" cy="208" r="14" fill="#f45b8a" />
+          <circle class="node" cx="642" cy="146" r="10" fill="#f45b8a" />
+          <circle class="node" cx="642" cy="270" r="10" fill="#f45b8a" />
+          <circle class="node" cx="654" cy="182" r="11" fill="#f45b8a" />
+          <circle class="node" cx="654" cy="234" r="11" fill="#f45b8a" />
+        </svg>
+      </div>
       <div class="phone">
         <div class="phone-inner">
           <small>☀ Today’s Question</small>
@@ -428,11 +633,11 @@
           and more you.
         </p>
         <div class="sharing-grid">
-          <div class="sharing-item"><div class="icon-box purple-bg">📊</div><h3>Surveys & polls</h3><p>We share feedback to help the team improve.</p><div class="small-callout">Ping is more personal and ongoing.</div></div>
-          <div class="sharing-item"><div class="icon-box teal-bg">👥</div><h3>Ice breakers</h3><p>We learn fun facts to get to know each other.</p><div class="small-callout">Ping goes deeper and builds real understanding.</div></div>
-          <div class="sharing-item"><div class="icon-box orange-bg">🙂</div><h3>Personality profiles</h3><p>We explore how we work and communicate.</p><div class="small-callout">Ping is like that — but alive, daily, and for everyone.</div></div>
-          <div class="sharing-item"><div class="icon-box pink-bg">💞</div><h3>Team activities</h3><p>We do things together to build connection.</p><div class="small-callout">Ping makes connection a daily habit.</div></div>
-          <div class="sharing-item"><div class="icon-box teal-bg">⭐</div><h3>Recognition</h3><p>We celebrate wins and appreciate each other.</p><div class="small-callout">Ping surfaces more moments to celebrate every day.</div></div>
+          <div class="sharing-item"><div class="icon-box"><img src="assets/chart-column.svg" alt="" /></div><h3>Surveys & polls</h3><p>We share feedback to help the team improve.</p><div class="small-callout">Ping is more personal and ongoing.</div></div>
+          <div class="sharing-item"><div class="icon-box"><img src="assets/pickaxe.svg" alt="" /></div><h3>Ice breakers</h3><p>We learn fun facts to get to know each other.</p><div class="small-callout">Ping goes deeper and builds real understanding.</div></div>
+          <div class="sharing-item"><div class="icon-box"><img src="assets/smile.svg" alt="" /></div><h3>Personality profiles</h3><p>We explore how we work and communicate.</p><div class="small-callout">Ping is like that — but alive, daily, and for everyone.</div></div>
+          <div class="sharing-item"><div class="icon-box"><img src="assets/heart.svg" alt="" /></div><h3>Team activities</h3><p>We do things together to build connection.</p><div class="small-callout">Ping makes connection a daily habit.</div></div>
+          <div class="sharing-item"><div class="icon-box"><img src="assets/star.svg" alt="" /></div><h3>Recognition</h3><p>We celebrate wins and appreciate each other.</p><div class="small-callout">Ping surfaces more moments to celebrate every day.</div></div>
         </div>
       </div>
 
@@ -444,10 +649,10 @@
             understanding each other, and creating a workplace where we all can do our best work.
           </p>
         </div>
-        <div class="value-card"><div class="mini-icon teal-bg">🔒</div><h3>Safe & respectful</h3><p>Answers are shared with the whole team — not used to evaluate anyone.</p></div>
-        <div class="value-card"><div class="mini-icon teal-bg">✦</div><h3>Uplifting insights</h3><p>AI highlights strengths, patterns, and ideas that help us grow together.</p></div>
-        <div class="value-card"><div class="mini-icon teal-bg">👥</div><h3>Everyone included</h3><p>Not just managers. Not just a few people. Everyone’s voice shapes the picture.</p></div>
-        <div class="value-card"><div class="mini-icon teal-bg">🎯</div><h3>Action that helps</h3><p>Insights turn into small, human actions that make the team better — together.</p></div>
+        <div class="value-card"><img class="mini-icon" src="assets/lock-keyhole.svg" alt="" /><h3>Safe & respectful</h3><p>Answers are shared with the whole team — not used to evaluate anyone.</p></div>
+        <div class="value-card"><img class="mini-icon" src="assets/star.svg" alt="" /><h3>Uplifting insights</h3><p>AI highlights strengths, patterns, and ideas that help us grow together.</p></div>
+        <div class="value-card"><img class="mini-icon" src="assets/users.svg" alt="" /><h3>Everyone included</h3><p>Not just managers. Not just a few people. Everyone’s voice shapes the picture.</p></div>
+        <div class="value-card"><img class="mini-icon" src="assets/target.svg" alt="" /><h3>Action that helps</h3><p>Insights turn into small, human actions that make the team better — together.</p></div>
       </div>
 
       <div class="examples-section">
@@ -456,56 +661,62 @@
           <p>Here are examples of the kinds of insights Ping brings to life.</p>
         </div>
         <div class="example-card">
-          <span class="label">Insight</span>
-          <h3>We recharge in different ways</h3>
-          <p>Knowing our preferences helps us support each other better.</p>
-          <div class="recharge-row">
-            <div class="recharge-item">👥<br /><strong>42%</strong><br />Social</div>
-            <div class="recharge-item">☀️<br /><strong>35%</strong><br />Solo</div>
-            <div class="recharge-item">📖<br /><strong>23%</strong><br />Active</div>
+          <span class="label">Poll</span>
+          <h3>Monday mood check</h3>
+          <p>Here’s how a simple daily poll can look when everyone answers the same one question.</p>
+          <div class="poll-result-card">
+            <p class="poll-question-small">Which color feels most like your Monday right now?</p>
+            <div class="color-bars">
+              <div class="color-bar-row">
+                <div class="color-swatch-label"><span class="color-swatch" style="background:#5a6fd8;"></span>Blue</div>
+                <div class="color-track"><div class="color-fill" style="--fill:38%; --fill-color:#5a6fd8;"></div></div>
+                <div>38%</div>
+              </div>
+              <div class="color-bar-row">
+                <div class="color-swatch-label"><span class="color-swatch" style="background:#f2c94c;"></span>Yellow</div>
+                <div class="color-track"><div class="color-fill" style="--fill:27%; --fill-color:#f2c94c;"></div></div>
+                <div>27%</div>
+              </div>
+              <div class="color-bar-row">
+                <div class="color-swatch-label"><span class="color-swatch" style="background:#2fb7a3;"></span>Green</div>
+                <div class="color-track"><div class="color-fill" style="--fill:21%; --fill-color:#2fb7a3;"></div></div>
+                <div>21%</div>
+              </div>
+              <div class="color-bar-row">
+                <div class="color-swatch-label"><span class="color-swatch" style="background:#f45b8a;"></span>Pink</div>
+                <div class="color-track"><div class="color-fill" style="--fill:14%; --fill-color:#f45b8a;"></div></div>
+                <div>14%</div>
+              </div>
+            </div>
           </div>
-          <p><strong>Idea:</strong> Plan a team recharge day with options for everyone.</p>
         </div>
         <div class="example-card">
           <span class="label">Insight</span>
-          <h3>We value these most</h3>
-          <p>These strengths show up again and again in our answers.</p>
-          <div class="chips">
-            <span class="chip">Creativity</span>
-            <span class="chip">Support</span>
-            <span class="chip">Humor</span>
-            <span class="chip">Growth</span>
-            <span class="chip">Kindness</span>
-            <span class="chip">Curiosity</span>
+          <h3>Team reflection</h3>
+          <div class="insight-voice">
+            <strong>The team seems capable and pretty game for ambitious work.</strong>
+            There’s a sense that people want to rise to the challenge, not just keep the lights on. What big project would feel energizing instead of exhausting right now?
           </div>
-          <p><strong>Idea:</strong> Lean into these in how we work together.</p>
         </div>
         <div class="example-card">
           <span class="label">Insight</span>
-          <h3>Small actions, big impact</h3>
-          <p>A little recognition goes a long way.</p>
-          <p>📣 Shout out one teammate</p>
-          <p>❔ Ask a curious question</p>
-          <p>⭐ Celebrate a small win</p>
-          <p><strong>Idea:</strong> Try one of these this week.</p>
+          <h3>Personal reflection</h3>
+          <div class="insight-voice">
+            <strong>You may be burning the candle at both ends right now.</strong>
+            Work can hold while you take an afternoon off. You’ll probably have much more energy tomorrow morning if you let yourself get some rest today.
+          </div>
         </div>
       </div>
 
-      <div class="testimonial-row">
-        <div class="testimonial"><div class="face">J</div><div><p>“It’s the highlight of my day. I learn something new about my coworkers every time.”</p><small>— Jess, Marketing</small></div></div>
-        <div class="testimonial"><div class="face">M</div><div><p>“It feels safe, fun, and actually brings us closer.”</p><small>— Marcus, Engineering</small></div></div>
-        <div class="testimonial"><div class="face">P</div><div><p>“We understand each other better — and that makes work easier.”</p><small>— Priya, Operations</small></div></div>
-        <div class="testimonial"><div class="face">A</div><div><p>“It’s like an ice breaker, a coach, and a team cheerleader all in one.”</p><small>— Alex, Product</small></div></div>
-      </div>
     </div>
   </section>
 
   <div class="cta">
     <div>
       <h2>Be part of something better.</h2>
-      <p>One question a day. A stronger team, every day.</p>
+      <p>One question a day.</p>
     </div>
-    <a class="button" href="#">Get Started with Ping</a>
+    <a class="button" href="#">send a ping demo to your boss</a>
   </div>
   <script src="assets/header-phrases.js"></script>
 </body>
