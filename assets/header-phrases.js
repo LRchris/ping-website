@@ -31,5 +31,5 @@
 
   renderPhrase();
 
-  window.setInterval(advancePhrase, 5000);
+  window.setInterval(advancePhrase, 30000);
 })();

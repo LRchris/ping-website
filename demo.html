@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ping Demo</title>
+  <style>
+    :root {
+      --navy: #0f2a44;
+      --purple: #5a6fd8;
+      --teal: #2fb7a3;
+      --teal-dark: #147c7c;
+      --border: #e8e3f4;
+      --text: #17203c;
+      --muted: #667085;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fffdf8 0%, #faf8ff 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    header {
+      height: 76px;
+      padding: 0 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,.9);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      gap: 20px;
+    }
+    .logo { display: flex; align-items: center; flex: 0 0 auto; }
+    .logo-image { height: 56px; width: auto; display: block; }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 800;
+      flex: 1 1 auto;
+      justify-content: flex-start;
+      margin-left: 18px;
+    }
+    .site-nav a { opacity: .82; }
+    .site-nav a.active { opacity: 1; color: var(--teal-dark); }
+    .script {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: var(--navy);
+      opacity: .8;
+      white-space: nowrap;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: white;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(47,183,163,.24);
+      white-space: nowrap;
+      border: 0;
+      cursor: pointer;
+    }
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 64px 5vw 88px;
+      display: grid;
+      gap: 72px;
+    }
+    .section-head {
+      display: grid;
+      gap: 20px;
+      justify-items: center;
+      text-align: center;
+    }
+    .eyebrow {
+      color: var(--teal-dark);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 900;
+      font-size: 14px;
+    }
+    h1, h2 {
+      margin: 0;
+      font-family: Georgia, serif;
+      line-height: 1.02;
+      letter-spacing: -2px;
+      color: var(--navy);
+    }
+    h1 {
+      font-size: clamp(40px, 5vw, 66px);
+      max-width: 860px;
+    }
+    h2 {
+      font-size: clamp(34px, 4.2vw, 56px);
+      max-width: 860px;
+    }
+    .lead {
+      margin: 0;
+      max-width: 760px;
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .video-panel,
+    .form-shell {
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      box-shadow: 0 20px 44px rgba(16,29,70,.08);
+      padding: 24px;
+    }
+    .demo-video {
+      display: block;
+      width: 100%;
+      border-radius: 24px;
+      background: #0f172a;
+      box-shadow: 0 14px 28px rgba(16,29,70,.12);
+    }
+    form {
+      display: grid;
+      gap: 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    label {
+      display: grid;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--navy);
+      text-align: left;
+    }
+    input, textarea, select {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--text);
+      background: rgba(255,255,255,.94);
+    }
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+    .form-status {
+      min-height: 24px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: left;
+    }
+    .form-status.success { color: var(--teal-dark); }
+    .form-status.error { color: #c2415b; }
+    @media (max-width: 960px) {
+      header { height: auto; padding: 18px 5vw; flex-wrap: wrap; }
+      .site-nav { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; margin-left: 0; }
+      .script { display: none; }
+      .grid { grid-template-columns: 1fr; }
+      main { gap: 56px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">
+      <img src="assets/ping-logo-3.png" alt="Ping" class="logo-image" />
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="leaders.html">For Leaders</a>
+      <a href="team-members.html">For Team Members</a>
+      <a href="demo.html" class="active">Demo</a>
+    </nav>
+    <span class="script">Questions. People. Connection.</span>
+  </header>
+
+  <main>
+    <section class="section-head">
+      <h1>Get a glimpse of your new daily ritual</h1>
+      <p class="lead">Ping builds huge value through a one-minute daily ritual. Watch this two minute video to see how it works.</p>
+      <div class="video-panel">
+        <video class="demo-video" controls preload="metadata" playsinline poster="assets/demo-video.mp4.png">
+          <source src="assets/demo-video.mp4" type="video/mp4" />
+          Your browser does not support embedded video.
+        </video>
+      </div>
+    </section>
+
+    <section id="book-demo" class="section-head">
+      <div class="eyebrow">Live walkthrough</div>
+      <h2>Book a live demo for your team.</h2>
+      <p class="lead">In most cases, it is impossible to ever see a demo of a tool with live data from your team, or it comes with great effort and time. We will demo Ping, with your data, in less than thirty minutes.</p>
+      <div class="form-shell">
+        <form id="demo-form">
+          <div class="grid">
+            <label>
+              Name
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" required />
+            </label>
+          </div>
+
+          <div class="grid">
+            <label>
+              Company or team
+              <input type="text" name="team" />
+            </label>
+            <label>
+              How many people would join?
+              <select name="group_size">
+                <option value="3">3 people</option>
+                <option value="4">4 people</option>
+                <option value="5">5 people</option>
+                <option value="6">6 people</option>
+                <option value="More than 6">More than 6</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            Choose a 30-minute time
+            <select name="timing" id="timing-slot" required>
+              <option value="">Select a slot in Eastern Time</option>
+            </select>
+          </label>
+
+          <label>
+            Anything we should know?
+            <textarea name="notes" placeholder="What you want to see, who will join, or anything else helpful."></textarea>
+          </label>
+
+          <div>
+            <button class="button" type="submit">Send demo request</button>
+          </div>
+          <div id="form-status" class="form-status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="assets/header-phrases.js"></script>
+  <script>
+    (function populateTimingSlots() {
+      const select = document.getElementById('timing-slot');
+      if (!select) return;
+
+      const timezone = 'America/New_York';
+      const now = new Date();
+      const labelFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone,
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+      const partsFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone,
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false
+      });
+
+      function getPartMap(date) {
+        return Object.fromEntries(
+          partsFormatter.formatToParts(date).map((part) => [part.type, part.value])
+        );
+      }
+
+      function isWeekday(year, month, day) {
+        const utcDate = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+        const weekday = new Intl.DateTimeFormat('en-US', {
+          timeZone: timezone,
+          weekday: 'short'
+        }).format(utcDate);
+        return weekday !== 'Sat' && weekday !== 'Sun';
+      }
+
+      function nextEtDate(year, month, day) {
+        const utcDate = new Date(Date.UTC(year, month - 1, day + 1, 12, 0, 0));
+        const nextParts = getPartMap(utcDate);
+        return {
+          year: Number(nextParts.year),
+          month: Number(nextParts.month),
+          day: Number(nextParts.day)
+        };
+      }
+
+      function resolveEasternDate(year, month, day, hour, minute) {
+        for (const offset of [4, 5]) {
+          const candidate = new Date(Date.UTC(year, month - 1, day, hour + offset, minute, 0));
+          const parts = getPartMap(candidate);
+          if (
+            Number(parts.year) === year &&
+            Number(parts.month) === month &&
+            Number(parts.day) === day &&
+            Number(parts.hour) === hour &&
+            Number(parts.minute) === minute
+          ) {
+            return candidate;
+          }
+        }
+        return null;
+      }
+
+      const todayParts = getPartMap(now);
+      let currentDate = {
+        year: Number(todayParts.year),
+        month: Number(todayParts.month),
+        day: Number(todayParts.day)
+      };
+
+      let weekdaysToSkip = 2;
+      while (weekdaysToSkip > 0) {
+        currentDate = nextEtDate(currentDate.year, currentDate.month, currentDate.day);
+        if (isWeekday(currentDate.year, currentDate.month, currentDate.day)) {
+          weekdaysToSkip -= 1;
+        }
+      }
+
+      let weekdaysAdded = 0;
+      while (weekdaysAdded < 10) {
+        if (isWeekday(currentDate.year, currentDate.month, currentDate.day)) {
+          for (let hour = 10; hour <= 15; hour += 1) {
+            for (const minute of [0, 30]) {
+              const slot = resolveEasternDate(currentDate.year, currentDate.month, currentDate.day, hour, minute);
+              if (!slot) continue;
+
+              const option = document.createElement('option');
+              option.value = labelFormatter.format(slot) + ' ET';
+              option.textContent = labelFormatter.format(slot) + ' ET';
+              select.appendChild(option);
+            }
+          }
+          weekdaysAdded += 1;
+        }
+
+        currentDate = nextEtDate(currentDate.year, currentDate.month, currentDate.day);
+      }
+    })();
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBJamDNDq4RCJP9BCK8nQ1qOWyGXfZec08",
+      authDomain: "pulsespark-prototype.firebaseapp.com",
+      projectId: "pulsespark-prototype",
+      storageBucket: "pulsespark-prototype.appspot.com",
+      messagingSenderId: "694965858371",
+      appId: "1:694965858371:web:30137be4a2dbc27c29e4f6",
+      measurementId: "G-VXNQ68DE3J"
+    };
+
+    const app = firebase.apps.length ? firebase.app() : firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore(app);
+    const form = document.getElementById('demo-form');
+    const statusEl = document.getElementById('form-status');
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    function setStatus(message, kind) {
+      statusEl.textContent = message || '';
+      statusEl.className = 'form-status' + (kind ? ' ' + kind : '');
+    }
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const payload = {
+        name: (data.get('name') || '').toString().trim(),
+        email: (data.get('email') || '').toString().trim(),
+        team: (data.get('team') || '').toString().trim(),
+        groupSize: (data.get('group_size') || '').toString().trim(),
+        timing: (data.get('timing') || '').toString().trim(),
+        notes: (data.get('notes') || '').toString().trim()
+      };
+
+      if (!payload.name || !payload.email || !payload.timing) {
+        setStatus('Please fill out your name, email, and a time slot.', 'error');
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      setStatus('Submitting your request...', '');
+
+      try {
+        const createdAt = firebase.firestore.FieldValue.serverTimestamp();
+
+        await db.collection('demo_requests').add({
+          ...payload,
+          createdAt,
+          status: 'new',
+          source: 'website_demo_page',
+          sourcePath: window.location.pathname,
+          userAgent: navigator.userAgent || null
+        });
+
+        try {
+          await db.collection('support_events').add({
+            eventType: 'demo_request_submitted',
+            severity: 'warning',
+            screen: 'website_demo',
+            message: 'New website demo request submitted.',
+            clientTimestamp: new Date().toISOString(),
+            createdAt,
+            username: payload.name,
+            organization: payload.team || null,
+            normalizedUsername: payload.name.toLowerCase(),
+            normalizedOrganization: payload.team ? payload.team.toLowerCase() : null,
+            navigatorUserAgent: navigator.userAgent || null,
+            extra: {
+              email: payload.email,
+              groupSize: payload.groupSize,
+              timing: payload.timing,
+              sourcePath: window.location.pathname
+            },
+            breadcrumbs: [
+              {
+                event: 'website_demo_form_submit',
+                at: new Date().toISOString()
+              }
+            ]
+          });
+        } catch (alertError) {
+          console.warn('Demo request saved, but support alert mirror failed:', alertError);
+        }
+
+        form.reset();
+        document.getElementById('timing-slot').selectedIndex = 0;
+        setStatus('Thanks — your demo request is in. We’ll follow up soon.', 'success');
+      } catch (error) {
+        console.error('Failed to submit demo request:', error);
+        setStatus('Something went wrong while saving your request. Please try again in a moment.', 'error');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send demo request';
+      }
+    });
+  </script>
+</body>
+</html>

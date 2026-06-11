@@ -72,7 +72,8 @@
       font-size: 14px;
       font-weight: 800;
       flex: 1 1 auto;
-      justify-content: center;
+      justify-content: flex-start;
+      margin-left: 18px;
     }
     .site-nav a { opacity: .82; }
     .site-nav a.active { opacity: 1; color: var(--teal-dark); }
@@ -204,6 +205,23 @@
       border-radius: 30px;
       padding: 28px;
       min-height: 430px;
+      position: relative;
+    }
+    .phone-face {
+      display: flex;
+      flex-direction: column;
+      min-height: 374px;
+    }
+    .phone-face.results {
+      position: absolute;
+      inset: 28px;
+      display: none;
+    }
+    .phone.is-flipped .phone-face.question {
+      display: none;
+    }
+    .phone.is-flipped .phone-face.results {
+      display: flex;
     }
     .phone h3 { font-size: 27px; line-height: 1.18; margin: 18px 0 20px; }
     .phone-answers {
@@ -212,6 +230,9 @@
       margin: 0 0 22px;
     }
     .phone-answer {
+      appearance: none;
+      width: 100%;
+      text-align: left;
       padding: 11px 12px;
       border-radius: 16px;
       border: 1px solid rgba(15, 42, 68, 0.12);
@@ -220,11 +241,77 @@
       font-size: 13px;
       font-weight: 700;
       line-height: 1.3;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .phone-answer:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(16,29,70,.08);
+      border-color: rgba(47, 183, 163, 0.28);
     }
     .phone-answer.selected {
       background: rgba(47, 183, 163, 0.16);
       border-color: rgba(47, 183, 163, 0.42);
       box-shadow: 0 8px 18px rgba(47, 183, 163, 0.14);
+    }
+
+    .phone-results-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .phone-results-header h4 {
+      margin: 0;
+      font-size: 22px;
+      color: var(--navy);
+    }
+    .phone-results-header span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .phone-result-bars {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .phone-result-row {
+      display: grid;
+      grid-template-columns: 88px 1fr 38px;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .phone-result-label {
+      font-size: 11px;
+      line-height: 1.2;
+    }
+    .phone-result-track {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(15, 42, 68, 0.08);
+      overflow: hidden;
+    }
+    .phone-result-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--yellow), var(--teal));
+      width: var(--fill, 40%);
+    }
+    .phone-reset {
+      margin-top: auto;
+      padding-top: 16px;
+      border: 0;
+      background: transparent;
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: left;
     }
     .panel {
       background: white;
@@ -468,15 +555,15 @@
 <body>
   <header>
     <a class="logo" href="index.html">
-      <img src="assets/primary-logo.svg" alt="Ping" class="logo-image" />
+      <img src="assets/ping-logo-3.png" alt="Ping" class="logo-image" />
     </a>
     <nav class="site-nav">
       <a href="index.html">Home</a>
       <a href="leaders.html">For Leaders</a>
       <a href="team-members.html" class="active">For Team Members</a>
+      <a href="demo.html">Demo</a>
     </nav>
     <span class="script">Questions. People. Connection.</span>
-    <a class="button" href="#">Try Ping</a>
   </header>
 
   <section class="hero">
@@ -607,17 +694,28 @@
           <circle class="node" cx="654" cy="234" r="11" fill="#f45b8a" />
         </svg>
       </div>
-      <div class="phone">
+      <div class="phone" id="team-hero-poll-card">
         <div class="phone-inner">
-          <small>☀ Today’s Question</small>
-          <h3>Would you eat deep-fried grasshoppers?</h3>
-          <div class="phone-answers">
-            <div class="phone-answer">Yes</div>
-            <div class="phone-answer">No</div>
-            <div class="phone-answer selected">I'll eat anything if you put it in a taco</div>
-            <div class="phone-answer">I regularly eat grasshoppers already</div>
+          <div class="phone-face question">
+            <small>☀ Today’s Question</small>
+            <h3>Would you eat deep-fried grasshoppers?</h3>
+            <div class="phone-answers">
+              <button class="phone-answer" data-option="yes">Yes</button>
+              <button class="phone-answer" data-option="no">No</button>
+              <button class="phone-answer selected" data-option="taco">I'll eat anything if you put it in a taco</button>
+              <button class="phone-answer" data-option="already">I regularly eat grasshoppers already</button>
+            </div>
+            <strong>Vote to see results →</strong>
           </div>
-          <strong>See today’s results →</strong>
+          <div class="phone-face results">
+            <small>☀ Today’s Results</small>
+            <div class="phone-results-header">
+              <h4>Team picks</h4>
+              <span id="team-hero-poll-total">0 votes</span>
+            </div>
+            <div class="phone-result-bars" id="team-hero-poll-results"></div>
+            <button class="phone-reset" id="team-hero-poll-reset" type="button">Reset my vote</button>
+          </div>
         </div>
       </div>
     </div>
@@ -716,8 +814,116 @@
       <h2>Be part of something better.</h2>
       <p>One question a day.</p>
     </div>
-    <a class="button" href="#">send a ping demo to your boss</a>
+    <a class="button" href="demo.html">send a ping demo to your boss</a>
   </div>
+  <script>
+    (function () {
+      const STORAGE_KEY = 'pingWebsiteTeamHeroPollV1';
+      const VOTE_KEY = 'pingWebsiteTeamHeroPollVoteV1';
+      const seedCounts = {
+        yes: 15,
+        no: 28,
+        taco: 41,
+        already: 16
+      };
+      const labels = {
+        yes: 'Yes',
+        no: 'No',
+        taco: 'Put it in a taco',
+        already: 'Already do'
+      };
+
+      const card = document.getElementById('team-hero-poll-card');
+      const resultsEl = document.getElementById('team-hero-poll-results');
+      const totalEl = document.getElementById('team-hero-poll-total');
+      const resetButton = document.getElementById('team-hero-poll-reset');
+      if (!card || !resultsEl || !totalEl || !resetButton) return;
+
+      function getCounts() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return { ...seedCounts };
+          return { ...seedCounts, ...JSON.parse(raw) };
+        } catch {
+          return { ...seedCounts };
+        }
+      }
+
+      function saveCounts(counts) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
+      }
+
+      function getTotal(counts) {
+        return Object.values(counts).reduce((sum, value) => sum + value, 0);
+      }
+
+      function renderResults() {
+        const counts = getCounts();
+        const total = getTotal(counts);
+        totalEl.textContent = total + (total === 1 ? ' vote' : ' votes');
+        resultsEl.innerHTML = '';
+
+        Object.entries(labels).forEach(([key, label]) => {
+          const count = counts[key] || 0;
+          const percentage = total ? Math.round((count / total) * 100) : 0;
+          const row = document.createElement('div');
+          row.className = 'phone-result-row';
+          row.innerHTML = `
+            <div class="phone-result-label">${label}</div>
+            <div class="phone-result-track">
+              <div class="phone-result-fill" style="--fill:${percentage}%"></div>
+            </div>
+            <div>${percentage}%</div>
+          `;
+          resultsEl.appendChild(row);
+        });
+      }
+
+      function showResults() {
+        renderResults();
+        card.classList.add('is-flipped');
+      }
+
+      card.querySelectorAll('.phone-answer').forEach((button) => {
+        button.addEventListener('click', () => {
+          const selected = button.dataset.option;
+          if (!selected) return;
+
+          const previousVote = localStorage.getItem(VOTE_KEY);
+          const counts = getCounts();
+
+          if (!previousVote) {
+            counts[selected] = (counts[selected] || 0) + 1;
+            saveCounts(counts);
+            localStorage.setItem(VOTE_KEY, selected);
+          }
+
+          showResults();
+        });
+      });
+
+      resetButton.addEventListener('click', () => {
+        const previousVote = localStorage.getItem(VOTE_KEY);
+        if (!previousVote) {
+          card.classList.remove('is-flipped');
+          return;
+        }
+
+        const counts = getCounts();
+        counts[previousVote] = Math.max(seedCounts[previousVote] || 0, (counts[previousVote] || 0) - 1);
+        saveCounts(counts);
+        localStorage.removeItem(VOTE_KEY);
+        renderResults();
+        card.classList.remove('is-flipped');
+      });
+
+      if (localStorage.getItem(VOTE_KEY)) {
+        showResults();
+      } else {
+        renderResults();
+      }
+    })();
+  </script>
   <script src="assets/header-phrases.js"></script>
 </body>
 </html>
