@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ping Admin</title>
+  <link rel="icon" type="image/png" href="../assets/ping-logo-3.png" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body data-page="dashboard">
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <a class="brand-lockup" href="index.html">
+        <img src="../assets/ping-logo-3.png" alt="Ping" />
+        <div class="brand-copy">
+          <strong>Ping Admin</strong>
+          <span>Local beta console</span>
+        </div>
+      </a>
+
+      <section class="sidebar-group">
+        <p class="sidebar-label">Core</p>
+        <nav class="sidebar-nav">
+          <a class="sidebar-link" data-nav="dashboard" href="index.html">Overview</a>
+          <a class="sidebar-link" data-nav="organizations" href="organizations.html">Organizations</a>
+          <a class="sidebar-link" data-nav="people" href="people.html">People & Access</a>
+          <a class="sidebar-link" data-nav="activity" href="activity.html">Activity</a>
+          <a class="sidebar-link" data-nav="health" href="health.html">Health & Support</a>
+        </nav>
+      </section>
+
+      <section class="sidebar-group">
+        <p class="sidebar-label">Later</p>
+        <nav class="sidebar-nav">
+          <span class="sidebar-link">Question operations (v2)</span>
+          <span class="sidebar-link">Role management rules (v2)</span>
+          <span class="sidebar-link">Org self-service (v2)</span>
+        </nav>
+      </section>
+
+      <div class="sidebar-card">
+        <h3>Intentional first version</h3>
+        <p>
+          This pass is about organizations, observed users, activity, versions, and support readiness.
+          We are not putting powerful question-editing controls here yet.
+        </p>
+        <span class="mini-pill" id="environment-name"></span>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div class="page-title-wrap">
+          <div class="breadcrumb-line" id="org-breadcrumb"></div>
+          <h1 id="page-title"></h1>
+          <p id="page-subtitle"></p>
+        </div>
+        <div class="topbar-meta">
+          <div class="identity-chip">Signed in as <strong id="signed-in-as"></strong></div>
+          <label>
+            <span class="sidebar-label">Organization scope</span>
+            <select id="org-switcher" class="scope-switcher"></select>
+          </label>
+          <div class="last-updated" id="last-updated"></div>
+        </div>
+      </header>
+
+      <div id="page-content"></div>
+    </main>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
