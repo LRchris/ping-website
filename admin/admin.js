@@ -58,7 +58,9 @@ const eventTypeLabels = {
   ping_sent: 'Sent ping',
   team_analysis_generated: 'Team analysis generated',
   profile_synced: 'Profile synced',
-  invite_created: 'Invite created'
+  invite_created: 'Invite created',
+  invite_claimed: 'Invite claimed',
+  invite_revoked: 'Invite revoked'
 };
 
 const state = {
@@ -857,6 +859,7 @@ function renderPeople() {
           <code>${escapeHtml(state.adminApi.lastCreatedInvite.inviteUrl)}</code>
           <div class="button-row top-gap">
             <button class="button-small" id="copy-invite-link" type="button">Copy link</button>
+            <a class="button-small" href="${escapeHtml(state.adminApi.lastCreatedInvite.inviteUrl)}" target="_blank" rel="noreferrer">Open link</a>
           </div>
         </div>
       </section>
@@ -912,7 +915,9 @@ function renderPeople() {
               <th>Status</th>
               <th>Admin role</th>
               <th>Entitlements</th>
+              <th>Expires</th>
               <th>Created</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -920,12 +925,19 @@ function renderPeople() {
               <tr>
                 <td><div class="cell-title">${escapeHtml(invite.email)}</div></td>
                 <td>${escapeHtml(invite.organizationName)}</td>
-                <td>${escapeHtml(invite.status)}</td>
+                <td>${escapeHtml(invite.isExpired && invite.status === 'pending' ? 'expired' : invite.status)}</td>
                 <td>${escapeHtml(invite.adminRole || 'member')}</td>
                 <td>${invite.appEntitlements?.length ? escapeHtml(invite.appEntitlements.join(', ')) : '—'}</td>
+                <td>${escapeHtml(formatTimestamp(parsePossibleDate(invite.expiresAt)))}</td>
                 <td>${escapeHtml(formatTimestamp(parsePossibleDate(invite.createdAt)))}</td>
+                <td>
+                  <div class="button-row">
+                    <button class="button-small js-copy-invite" type="button" data-url="${escapeHtml(invite.inviteUrl)}">Copy link</button>
+                    ${invite.status === 'pending' && !invite.isExpired ? `<button class="button-small js-revoke-invite" type="button" data-id="${escapeHtml(invite.id)}">Revoke</button>` : ''}
+                  </div>
+                </td>
               </tr>
-            `).join('') || `<tr><td colspan="6" class="empty-row">No invite records yet for this scope.</td></tr>`}
+            `).join('') || `<tr><td colspan="8" class="empty-row">No invite records yet for this scope.</td></tr>`}
           </tbody>
         </table>
       </div>
@@ -950,6 +962,55 @@ function renderPeople() {
       }
     });
   }
+
+  document.querySelectorAll('.js-copy-invite').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const url = button.dataset.url || '';
+      try {
+        await navigator.clipboard.writeText(url);
+        state.uiMessage = { kind: 'low', title: 'Invite link copied', detail: 'That invite link is now on your clipboard.' };
+        renderPage();
+      } catch (error) {
+        state.uiMessage = { kind: 'medium', title: 'Copy failed', detail: error.message || 'Could not copy the invite link.' };
+        renderPage();
+      }
+    });
+  });
+
+  document.querySelectorAll('.js-revoke-invite').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const inviteId = button.dataset.id || '';
+      if (!inviteId) return;
+
+      try {
+        const response = await fetch(`${ADMIN_API_BASE}/api/invites/revoke`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            inviteId,
+            revokedBy: fallbackAppInfo.signedInAs
+          })
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.error || `HTTP ${response.status}`);
+
+        state.uiMessage = {
+          kind: 'low',
+          title: 'Invite revoked',
+          detail: `Revoked the pending invite for ${result.invite.email}.`
+        };
+        await refreshAdminApiAfterInvite();
+        renderPage();
+      } catch (error) {
+        state.uiMessage = {
+          kind: 'medium',
+          title: 'Revoke failed',
+          detail: error.message || 'Could not revoke the invite.'
+        };
+        renderPage();
+      }
+    });
+  });
 }
 
 function renderActivity() {
